@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>	
+	
+	<head xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:th="https://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+		
+		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />		
+		<title>The Watch List</title>
+
+	</head>
+	
+	<body>
+	
+		<p th:text="'Здравствуйте, ' + ${name} + '!'"></p>
+		<p>Добро пожаловать на The Watch List! Для активации вашей электронной почты перейдите по ссылке: </p><a th:href="@{'http://localhost:8081/activate/' + ${activationCode}}">Код активации</a>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,36 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://localhost/wl
+    username: postgres
+    password: postgres
+
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  mail:
+    host: smtp.yandex.ru
+    username: Andersen1313@yandex.ru
+    password: 1qaz!QAZXC
+    port: 465
+    protocol: smtps
+
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+
+server:
+  port: 8081
+
+mail:
+  debug: true
+
+recaptcha:
+  secret: 6LftHK8UAAAAALhw3rP-_Qc4L9tU0vnL_o_409dr
+
