@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.lookup.MapDataSourceLookup;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/registration")
+@RequestMapping("/api")
 public class RegistrationController {
 
     @Autowired
@@ -28,7 +29,7 @@ public class RegistrationController {
     @Autowired
     UserMapper userMapper;
 
-    @PostMapping
+    @PostMapping("/registration")
     public @ResponseBody String registration(@Valid @RequestBody UserDTO userDTO,
                                 Errors errors) throws JsonProcessingException {
 
@@ -59,6 +60,17 @@ public class RegistrationController {
         }
 
         return json;
+
+    }
+
+    @PostMapping("/activate/{code}")
+    public  Map<String, Boolean> activate(@PathVariable String code) {
+
+        Map<String, Boolean> response = new HashMap<>();
+
+        response.put("result", userService.activateUser(code));
+
+        return response;
 
     }
 }

@@ -13,7 +13,7 @@
 	<body>
 	
 		<p th:text="'Здравствуйте, ' + ${name} + '!'"></p>
-		<p>Добро пожаловать на The Watch List! Для активации вашей электронной почты перейдите по ссылке: </p><a th:href="@{'http://localhost:8081/activate/' + ${activationCode}}">Код активации</a>
+		<p>Добро пожаловать на The Watch List! Для активации вашей электронной почты перейдите по ссылке: </p><a th:href="@{'http://localhost:8080/activate/' + ${activationCode}}">Код активации</a>
 		
 	</body>
 	
