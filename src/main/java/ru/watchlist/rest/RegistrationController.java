@@ -1,17 +1,16 @@
-package ru.watchlist.controller;
+package ru.watchlist.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.lookup.MapDataSourceLookup;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.user.User;
 import ru.watchlist.dto.UserDTO;
 import ru.watchlist.mapper.UserMapper;
-import ru.watchlist.service.UserService;
+import ru.watchlist.service.impl.UserServiceImpl;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class RegistrationController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     UserMapper userMapper;
@@ -33,16 +32,16 @@ public class RegistrationController {
     public @ResponseBody String registration(@Valid @RequestBody UserDTO userDTO,
                                 Errors errors) throws JsonProcessingException {
 
-        String json = "";
+        String json;
 
         if(errors.hasErrors()) {
 
-            List<Map<String, String>> errorMessages = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> errorMessages = new ArrayList<>();
 
             List<ObjectError> allErrors= errors.getAllErrors();
 
             for (ObjectError error: allErrors) {
-                errorMessages.add(new HashMap<String, String>() {{
+                errorMessages.add(new HashMap<>() {{
                     put("error", error.getDefaultMessage());
                 }});
             }
@@ -56,7 +55,12 @@ public class RegistrationController {
 
         } else {
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            json = ow.writeValueAsString(userMapper.toUserDTO(userService.createUser(userDTO)));
+
+            User user = userMapper.fromUserDTO(userDTO);
+            user = userService.createUser(user);
+            userDTO = userMapper.toUserDTO(user);
+
+            json = ow.writeValueAsString(userDTO);
         }
 
         return json;

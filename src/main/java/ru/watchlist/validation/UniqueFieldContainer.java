@@ -1,4 +1,4 @@
-package ru.watchlist.dto.validation;
+package ru.watchlist.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

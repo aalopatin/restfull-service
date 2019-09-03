@@ -34,3 +34,7 @@ mail:
 recaptcha:
   secret: 6LftHK8UAAAAALhw3rP-_Qc4L9tU0vnL_o_409dr
 
+jwt:
+  token:
+    secret: jwtthewatchlist
+    expired: 2592000000

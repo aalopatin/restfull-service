@@ -1,4 +1,4 @@
-package ru.watchlist.controller;
+package ru.watchlist.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import ru.watchlist.domain.user.User;
 import ru.watchlist.dto.UserDTO;
 import ru.watchlist.mapper.UserMapper;
 import ru.watchlist.repository.UserRepository;
-import ru.watchlist.service.UserService;
+import ru.watchlist.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     UserRepository userRepository;
@@ -45,7 +45,10 @@ public class UserController {
     @PutMapping
     public UserDTO saveUser(@RequestBody UserDTO userDTO) {
 
-        return userMapper.toUserDTO(userService.saveUser(userDTO));
+        User user = userMapper.fromUserDTO(userDTO);
+        User userFromDB = userService.saveUser(user);
+
+        return userMapper.toUserDTO(userFromDB);
 
     }
 

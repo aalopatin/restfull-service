@@ -1,4 +1,4 @@
-package ru.watchlist.dto.validation;
+package ru.watchlist.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.util.FieldUtils;

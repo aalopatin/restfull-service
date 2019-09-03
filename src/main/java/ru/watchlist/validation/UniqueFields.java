@@ -1,4 +1,4 @@
-package ru.watchlist.dto.validation;
+package ru.watchlist.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
