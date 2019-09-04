@@ -7,14 +7,18 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.user.User;
 import ru.watchlist.dto.AuthenticationRequestDTO;
 import ru.watchlist.dto.AuthenticationResponseDTO;
+import ru.watchlist.dto.ProfileDTO;
+import ru.watchlist.mapper.UserMapper;
 import ru.watchlist.security.jwt.JwtTokenProvider;
 import ru.watchlist.service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/auth/")
@@ -29,7 +33,10 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/login")
+    @Autowired
+    UserMapper userMapper;
+
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDTO requestDTO){
         try {
             String username = requestDTO.getUsername();
@@ -50,6 +57,20 @@ public class AuthenticationController {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity user(HttpServletRequest request) {
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(token);
+
+        User user = userService.findByUsername(username);
+        Map<String, ProfileDTO> response = new HashMap<>();
+        response.put("user", userMapper.toProfileDTO(user));
+
+        return ResponseEntity.ok(response);
+
     }
 
 }
