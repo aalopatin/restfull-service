@@ -6,10 +6,11 @@ import ru.watchlist.domain.user.Role;
 import java.util.Set;
 
 @Data
-public class ProfileDTO {
+public class UserAuthDTO {
 
+    private Long id;
     private String username;
-    private String Email;
-    private Set<Role> scope;
+    private String email;
+    private Set<Role> roles;
 
 }

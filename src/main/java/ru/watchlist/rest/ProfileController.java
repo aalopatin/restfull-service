@@ -1,43 +1,39 @@
 package ru.watchlist.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.user.User;
 import ru.watchlist.dto.UserDTO;
+import ru.watchlist.dto.UserProfileDTO;
 import ru.watchlist.mapper.UserMapper;
-import ru.watchlist.service.impl.UserServiceImpl;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api")
-public class RegistrationController {
-
-    @Autowired
-    UserServiceImpl userService;
+@RequestMapping("/api/profile")
+public class ProfileController {
 
     @Autowired
     UserMapper userMapper;
 
-    @PostMapping("/registration")
-    @ResponseBody
-    public String registration(@Valid @RequestBody UserDTO userDTO,
-                                Errors errors) throws JsonProcessingException {
+    @GetMapping("/{id}")
+    public UserProfileDTO profileBasic(@PathVariable(value = "id") User user) {
+        return userMapper.toUserProfileDTO(user);
+    }
 
-        String json;
+    @PutMapping("/edit/{id}")
+    public ResponseEntity saveProfile(@PathVariable(value = "id") User user, @Valid @RequestBody UserDTO userDTO,
+                                      Errors errors) {
 
         if(errors.hasErrors()) {
 
-            List<Map<String, String>> errorMessages = new ArrayList<>();
+            Set<Map<String, String>> errorMessages = new HashSet<>();
 
             List<ObjectError> allErrors= errors.getAllErrors();
 
@@ -47,12 +43,11 @@ public class RegistrationController {
                 }});
             }
 
-            Map<String, List> dataErrors = new HashMap<>();
+            Map<String, Set> dataErrors = new HashMap<>();
 
             dataErrors.put("errors", errorMessages);
 
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            json = ow.writeValueAsString(dataErrors);
+            return ResponseEntity.badRequest(dataErrors);
 
         } else {
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -64,18 +59,6 @@ public class RegistrationController {
             json = ow.writeValueAsString(userDTO);
         }
 
-        return json;
-
-    }
-
-    @PostMapping("/activate/{code}")
-    public  Map<String, Boolean> activate(@PathVariable String code) {
-
-        Map<String, Boolean> response = new HashMap<>();
-
-        response.put("result", userService.activateUser(code));
-
-        return response;
 
     }
 }
