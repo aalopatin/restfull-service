@@ -4,13 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.user.User;
-import ru.watchlist.dto.UserDTO;
+import ru.watchlist.dto.user.UserProfileDTO;
+import ru.watchlist.dto.user.UserRegistrationDTO;
 import ru.watchlist.mapper.UserMapper;
-import ru.watchlist.service.impl.UserServiceImpl;
+import ru.watchlist.rest.exception.ValidationErrorsException;
+import ru.watchlist.service.UserService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -23,48 +27,25 @@ import java.util.Map;
 public class RegistrationController {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
     UserMapper userMapper;
 
     @PostMapping("/registration")
     @ResponseBody
-    public String registration(@Valid @RequestBody UserDTO userDTO,
-                                Errors errors) throws JsonProcessingException {
-
-        String json;
+    public ResponseEntity<UserRegistrationDTO> registration(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO,
+                                       Errors errors) throws Exception {
 
         if(errors.hasErrors()) {
-
-            List<Map<String, String>> errorMessages = new ArrayList<>();
-
-            List<ObjectError> allErrors= errors.getAllErrors();
-
-            for (ObjectError error: allErrors) {
-                errorMessages.add(new HashMap<>() {{
-                    put("error", error.getDefaultMessage());
-                }});
-            }
-
-            Map<String, List> dataErrors = new HashMap<>();
-
-            dataErrors.put("errors", errorMessages);
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            json = ow.writeValueAsString(dataErrors);
-
-        } else {
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-            User user = userMapper.fromUserDTO(userDTO);
-            user = userService.createUser(user);
-            userDTO = userMapper.toUserDTO(user);
-
-            json = ow.writeValueAsString(userDTO);
+            throw new ValidationErrorsException(errors);
         }
 
-        return json;
+        User user = userMapper.fromUserRegistrationDTO(userRegistrationDTO);
+        user = userService.createUser(user);
+        userRegistrationDTO = userMapper.toUserRegistrationDTO(user);
+
+        return new ResponseEntity<>(userRegistrationDTO, HttpStatus.OK);
 
     }
 

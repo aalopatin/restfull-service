@@ -1,23 +1,33 @@
 package ru.watchlist.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.user.User;
-import ru.watchlist.dto.UserDTO;
-import ru.watchlist.dto.UserProfileDTO;
+import ru.watchlist.dto.user.UserEmailDTO;
+import ru.watchlist.dto.user.UserPasswordDTO;
+import ru.watchlist.dto.user.UserProfileDTO;
 import ru.watchlist.mapper.UserMapper;
+import ru.watchlist.rest.exception.AccessDeniedProfileException;
+import ru.watchlist.rest.exception.ValidationErrorsException;
+import ru.watchlist.security.jwt.JwtTokenProvider;
+import ru.watchlist.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
 
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserMapper userMapper;
@@ -27,38 +37,44 @@ public class ProfileController {
         return userMapper.toUserProfileDTO(user);
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity saveProfile(@PathVariable(value = "id") User user, @Valid @RequestBody UserDTO userDTO,
-                                      Errors errors) {
+    @PutMapping("/{id}/email")
+    public ResponseEntity<Object> changeEmail(
+            HttpServletRequest request,
+            @PathVariable Long id,
+            @RequestBody @Valid UserEmailDTO userEmailDTO,
+            Errors errors) throws Exception {
 
-        if(errors.hasErrors()) {
-
-            Set<Map<String, String>> errorMessages = new HashSet<>();
-
-            List<ObjectError> allErrors= errors.getAllErrors();
-
-            for (ObjectError error: allErrors) {
-                errorMessages.add(new HashMap<>() {{
-                    put("error", error.getDefaultMessage());
-                }});
-            }
-
-            Map<String, Set> dataErrors = new HashMap<>();
-
-            dataErrors.put("errors", errorMessages);
-
-            return ResponseEntity.badRequest(dataErrors);
-
-        } else {
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-            User user = userMapper.fromUserDTO(userDTO);
-            user = userService.createUser(user);
-            userDTO = userMapper.toUserDTO(user);
-
-            json = ow.writeValueAsString(userDTO);
+        if(userService.checkIDToken(id, request)) {
+            throw new AccessDeniedProfileException("Вы не можете редактировать пользователя с указанным id!");
         }
 
+        if(errors.hasErrors()) {
+            throw new ValidationErrorsException(errors);
+        }
 
+        userService.changeEmail(id, userEmailDTO.getEmail());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Object> changePassword(
+            HttpServletRequest request,
+            @PathVariable Long id,
+            @RequestBody @Valid UserPasswordDTO userPasswordDTO,
+            Errors errors) throws Exception {
+
+        if(userService.checkIDToken(id, request)) {
+            throw new AccessDeniedProfileException("Вы не можете редактировать пользователя с указанным id!");
+        }
+
+        if(errors.hasErrors()) {
+            throw new ValidationErrorsException(errors);
+        }
+
+        userService.changePassword(id, userPasswordDTO.getPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

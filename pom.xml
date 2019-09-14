@@ -19,6 +19,7 @@
 		<org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.8</org.projectlombok.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
+		<com.fasterxml.jackson.datatype.version>2.9.9</com.fasterxml.jackson.datatype.version>
 	</properties>
 
 	<dependencies>
@@ -81,6 +82,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${com.fasterxml.jackson.datatype.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.user;
 
 import lombok.Data;
 import ru.watchlist.validation.UniqueField;
@@ -10,14 +10,14 @@ import javax.validation.constraints.NotBlank;
 @Data
 @UniqueField(fieldName = UniqueFields.EMAIL, message = "Указанный email занят!")
 @UniqueField(fieldName = UniqueFields.USERNAME, message = "Указанное имя пользователя занято!")
-public class UserDTO {
+public class UserRegistrationDTO {
 
     private Long id;
 
-    @NotBlank(message = "Имя пользователя должно быть заполенно!")
+    @NotBlank(message = "Имя пользователя должно быть заполнено!")
     private String username;
 
-    @NotBlank(message = "Пароль должен быть заполенн!")
+    @NotBlank(message = "Пароль должен быть заполнен!")
     private String password;
 
     @NotBlank(message = "Email должен быть заполнен!")
