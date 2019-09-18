@@ -34,6 +34,7 @@ public class ProfileController {
 
     @GetMapping("/{id}")
     public UserProfileDTO profileBasic(@PathVariable(value = "id") User user) {
+
         return userMapper.toUserProfileDTO(user);
     }
 

@@ -13,14 +13,17 @@ public interface UserService {
     boolean activateUser(String code);
     boolean checkIDToken(Long id, HttpServletRequest request);
 
+    User changeActivationCode(User user);
 
     User changeEmail(Long id, String Email) throws EntityNotFoundException;
     User changePassword(Long id, String password) throws EntityNotFoundException;
 
+
+
     //UserRepository
     List<User> getAll();
     User findByUsername(String username);
-    User findById(Long id);
+    User findById(Long id) throws EntityNotFoundException;
 
 
 }

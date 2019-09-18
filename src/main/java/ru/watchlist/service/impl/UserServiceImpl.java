@@ -64,10 +64,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
 
-        User userFromDB = userRepository.findById(user.getId()).orElseThrow();
-        userMapper.fromUserToUser(userFromDB, user);
-        userRepository.save(userFromDB);
-        return userFromDB;
+        userRepository.save(user);
+        return user;
 
     }
 
@@ -98,6 +96,16 @@ public class UserServiceImpl implements UserService {
 
         return userFromJWT==null || !id.equals(userFromJWT.getId());
 
+    }
+
+    @Override
+    public User changeActivationCode(User user) {
+
+        user.setActivationCode(UUID.randomUUID().toString());
+        userRepository.save(user);
+        sendActivationCode(user);
+
+        return user;
     }
 
     @Override
@@ -143,7 +151,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(Long id) throws EntityNotFoundException {
+
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user==null) {
+            throw new EntityNotFoundException(User.class, "id", id.toString());
+        }
+
         return userRepository.findById(id).orElse(null);
     }
 
