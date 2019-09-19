@@ -24,7 +24,7 @@ public class User {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private Long id;
 
 	@Column(unique = true)
