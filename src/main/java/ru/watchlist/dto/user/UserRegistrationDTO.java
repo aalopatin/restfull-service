@@ -1,6 +1,7 @@
 package ru.watchlist.dto.user;
 
 import lombok.Data;
+import ru.watchlist.validation.ReCaptcha;
 import ru.watchlist.validation.UniqueField;
 import ru.watchlist.validation.UniqueFields;
 
@@ -23,5 +24,8 @@ public class UserRegistrationDTO {
     @NotBlank(message = "Email должен быть заполнен!")
     @Email(message = "Не правильно введен email!")
     private String email;
+
+    @ReCaptcha(message = "Подтвердите, что вы человек!")
+    private String recaptchaToken;
 
 }

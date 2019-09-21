@@ -32,7 +32,8 @@ mail:
   debug: true
 
 recaptcha:
-  secret: 6LftHK8UAAAAALhw3rP-_Qc4L9tU0vnL_o_409dr
+  secret: 6Ldbo7kUAAAAAI6ZcMO55EjqnGy76IPDExpg0-tE
+  captcha-url: "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s"
 
 jwt:
   token:

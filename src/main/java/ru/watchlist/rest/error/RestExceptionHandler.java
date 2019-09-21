@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.watchlist.rest.exception.AccessDeniedProfileException;
 import ru.watchlist.rest.exception.EntityNotFoundException;
+import ru.watchlist.rest.exception.ReCaptchaException;
 import ru.watchlist.rest.exception.ValidationErrorsException;
 
 import static org.springframework.http.HttpStatus.*;
@@ -39,6 +40,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AccessDeniedProfileException.class)
     protected ResponseEntity<Object> handleAccessDeniedProfile(AccessDeniedProfileException ex) {
         ApiError apiError = new ApiError(FORBIDDEN);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(ReCaptchaException.class)
+    protected ResponseEntity<Object> handleReCaptcha(ReCaptchaException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

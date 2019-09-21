@@ -1,41 +1,41 @@
 package ru.watchlist.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import ru.watchlist.domain.user.User;
-import ru.watchlist.dto.user.UserProfileDTO;
+import ru.watchlist.dto.CaptchaResponseDTO;
 import ru.watchlist.dto.user.UserRegistrationDTO;
 import ru.watchlist.mapper.UserMapper;
+import ru.watchlist.rest.exception.ReCaptchaException;
 import ru.watchlist.rest.exception.ValidationErrorsException;
 import ru.watchlist.service.UserService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class RegistrationController {
 
-    @Autowired
-    UserService userService;
+
 
     @Autowired
-    UserMapper userMapper;
+    private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/registration")
-    @ResponseBody
-    public ResponseEntity<UserRegistrationDTO> registration(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO,
-                                       Errors errors) throws Exception {
+    public ResponseEntity<UserRegistrationDTO> registration(
+            @Valid @RequestBody UserRegistrationDTO userRegistrationDTO,
+            Errors errors) throws ValidationErrorsException {
 
         if(errors.hasErrors()) {
             throw new ValidationErrorsException(errors);
