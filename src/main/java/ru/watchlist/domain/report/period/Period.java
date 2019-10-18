@@ -4,10 +4,7 @@ import lombok.Data;
 import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -21,6 +18,8 @@ public class Period {
     private String id;
     private LocalDate startPeriod;
     private LocalDate endPeriod;
+
+    @Enumerated(EnumType.STRING)
     private TypePeriod type;
 
 }

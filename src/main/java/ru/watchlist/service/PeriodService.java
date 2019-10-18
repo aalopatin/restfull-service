@@ -41,13 +41,6 @@ public class PeriodService {
         return periodRepository.findAll();
     }
 
-    public Period savePeriod(String id, Period period) throws EntityNotFoundException {
-        Period periodFromDB = findById(id);
-        periodMapper.fillPeriod(period, periodFromDB);
-        periodRepository.save(periodFromDB);
-        return periodFromDB;
-    }
-
     public void deletePeriod(String id) throws EntityNotFoundException {
         try {
             periodRepository.deleteById(id);

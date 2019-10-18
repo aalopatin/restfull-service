@@ -41,13 +41,6 @@ public class PeriodController {
         return new ResponseEntity<>(periodMapper.toPeriodDTOList(periods), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PeriodDTO> savePeriod(@PathVariable String id, @RequestBody PeriodDTO periodDTO) throws EntityNotFoundException {
-        Period period = periodMapper.fromPeriodDTO(periodDTO);
-        period = periodService.savePeriod(id, period);
-        return new ResponseEntity<>(periodMapper.toPeriodDTO(period), HttpStatus.OK);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePeriod(@PathVariable String id) throws  EntityNotFoundException {
         periodService.deletePeriod(id);
