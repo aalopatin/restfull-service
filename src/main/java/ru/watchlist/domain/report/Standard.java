@@ -4,6 +4,6 @@ import javax.persistence.Id;
 
 public enum Standard {
 
-    IFRS, RSBU, GAAP
+    IFRS, RSBU, GAAP, OTHER
 
 }
