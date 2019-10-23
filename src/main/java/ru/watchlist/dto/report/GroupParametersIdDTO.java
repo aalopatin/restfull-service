@@ -1,14 +1,13 @@
 package ru.watchlist.dto.report;
 
 import lombok.Data;
-import ru.watchlist.domain.report.TypeReport;
 
 @Data
-public class GroupParametersDTO {
+public class GroupParametersIdDTO {
 
     private Long id;
     private String title;
     private boolean basic;
-    private TypeReportDTO typeReport;
+    private Long typeReport;
 
 }

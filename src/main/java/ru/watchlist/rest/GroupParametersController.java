@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.report.GroupParameters;
 import ru.watchlist.dto.report.GroupParametersDTO;
+import ru.watchlist.dto.report.GroupParametersIdDTO;
 import ru.watchlist.mapper.GroupParametersMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.GroupParametersService;
@@ -13,7 +14,7 @@ import ru.watchlist.service.GroupParametersService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/groupparameters")
+@RequestMapping("/api/admin/groupsparameters")
 public class GroupParametersController {
 
     @Autowired
@@ -23,16 +24,16 @@ public class GroupParametersController {
     private GroupParametersMapper groupParametersMapper;
 
     @PostMapping
-    public ResponseEntity<GroupParametersDTO> createGroupParameters(@RequestBody GroupParametersDTO groupParametersDTO) {
-        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersDTO(groupParametersDTO);
+    public ResponseEntity<GroupParametersIdDTO> createGroupParameters(@RequestBody GroupParametersIdDTO groupParametersIdDTO) {
+        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersIdDTO(groupParametersIdDTO);
         groupParameters = groupParametersService.createGroupParameters(groupParameters);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersDTO(groupParameters), HttpStatus.OK);
+        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupParametersDTO> getGroupParameters(@PathVariable Long id) throws EntityNotFoundException {
+    public ResponseEntity<GroupParametersIdDTO> getGroupParameters(@PathVariable Long id) throws EntityNotFoundException {
         GroupParameters groupParameters = groupParametersService.findById(id);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersDTO(groupParameters), HttpStatus.OK);
+        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
     }
 
     @GetMapping
@@ -42,10 +43,10 @@ public class GroupParametersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GroupParametersDTO> saveGroupParameters(@PathVariable Long id, @RequestBody GroupParametersDTO groupParametersDTO) throws EntityNotFoundException {
-        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersDTO(groupParametersDTO);
+    public ResponseEntity<GroupParametersIdDTO> saveGroupParameters(@PathVariable Long id, @RequestBody GroupParametersIdDTO groupParametersIdDTO) throws EntityNotFoundException {
+        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersIdDTO(groupParametersIdDTO);
         groupParameters = groupParametersService.saveGroupParameters(id, groupParameters);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersDTO(groupParameters), HttpStatus.OK);
+        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")

@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
@@ -14,6 +15,8 @@ public class GroupParameters {
     @GeneratedValue
     private Long id;
     private String title;
+    private boolean basic;
+    @ManyToOne()
     private TypeReport typeReport;
 
 }

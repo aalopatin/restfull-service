@@ -3,6 +3,7 @@ package ru.watchlist.mapper;
 import org.mapstruct.*;
 import ru.watchlist.domain.report.GroupParameters;
 import ru.watchlist.dto.report.GroupParametersDTO;
+import ru.watchlist.dto.report.GroupParametersIdDTO;
 
 import java.util.List;
 
@@ -10,9 +11,15 @@ import java.util.List;
 public interface GroupParametersMapper {
 
     //GroupParametersDTO
-    GroupParametersDTO toGroupParametersDTO(GroupParameters GroupParameters);
-    List<GroupParametersDTO> toGroupParametersDTOList(List<GroupParameters> companies);
-    GroupParameters fromGroupParametersDTO(GroupParametersDTO GroupParametersDTO);
+    GroupParametersDTO toGroupParametersDTO(GroupParameters groupParameters);
+    List<GroupParametersDTO> toGroupParametersDTOList(List<GroupParameters> groupsParameters);
+    GroupParameters fromGroupParametersDTO(GroupParametersDTO groupParametersDTO);
+
+    //GroupParametersIdDTO
+    @Mapping(target = "typeReport", source = "typeReport.id")
+    GroupParametersIdDTO toGroupParametersIdDTO(GroupParameters groupParameters);
+    @Mapping(target = "typeReport.id", source = "typeReport")
+    GroupParameters fromGroupParametersIdDTO(GroupParametersIdDTO groupParametersIdDTO);
 
     //GroupParameters
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
