@@ -16,14 +16,16 @@ public interface GroupParametersMapper {
     GroupParameters fromGroupParametersDTO(GroupParametersDTO groupParametersDTO);
 
     //GroupParametersIdDTO
-    @Mapping(target = "typeReport", source = "typeReport.id")
+    @Mapping(target = "typeReportId", source = "typeReport.id")
     GroupParametersIdDTO toGroupParametersIdDTO(GroupParameters groupParameters);
-    @Mapping(target = "typeReport.id", source = "typeReport")
+    List<GroupParametersIdDTO> toGroupParametersIdDTOList(List<GroupParameters> groups);
+    @Mapping(target = "typeReport.id", source = "typeReportId")
     GroupParameters fromGroupParametersIdDTO(GroupParametersIdDTO groupParametersIdDTO);
 
     //GroupParameters
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "id", ignore = true)
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    @Mapping(target = "id", ignore = true)
     void fillGroupParameters(GroupParameters source, @MappingTarget GroupParameters target);
-    
+
+
 }

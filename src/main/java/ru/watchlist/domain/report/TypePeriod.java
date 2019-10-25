@@ -1,4 +1,4 @@
-package ru.watchlist.domain.report.period;
+package ru.watchlist.domain.report;
 
 import java.lang.reflect.Type;
 

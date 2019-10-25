@@ -3,19 +3,13 @@ package ru.watchlist.idgenerator;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
-import ru.watchlist.domain.report.period.Period;
-import ru.watchlist.domain.report.period.TypePeriod;
+import ru.watchlist.domain.report.Period;
+import ru.watchlist.domain.report.TypePeriod;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 public class PeriodIdentifierGenerator implements IdentifierGenerator {
 

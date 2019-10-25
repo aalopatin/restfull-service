@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class TypeReport {
+public class Parameter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String title;
-
-    @Enumerated(EnumType.STRING)
-    private Standard standard;
+    @ManyToOne
+    private GroupParameters group;
+    private boolean cumulative;
 
 }

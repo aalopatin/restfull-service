@@ -3,11 +3,11 @@ package ru.watchlist.dto.report;
 import lombok.Data;
 
 @Data
-public class GroupParametersIdDTO {
+public class ParameterIdDTO {
 
     private Long id;
     private String title;
-    private boolean basic;
-    private Long typeReportId;
+    private long groupId;
+    private boolean cumulative;
 
 }

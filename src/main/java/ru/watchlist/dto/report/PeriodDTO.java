@@ -1,11 +1,9 @@
-package ru.watchlist.dto.report.period;
+package ru.watchlist.dto.report;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import ru.watchlist.domain.report.period.TypePeriod;
+import ru.watchlist.domain.report.TypePeriod;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 public class PeriodDTO {

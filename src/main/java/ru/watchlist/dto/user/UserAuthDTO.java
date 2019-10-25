@@ -1,4 +1,4 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.user;
 
 import lombok.Data;
 import ru.watchlist.domain.user.Role;

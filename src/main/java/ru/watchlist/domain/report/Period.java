@@ -1,12 +1,10 @@
-package ru.watchlist.domain.report.period;
+package ru.watchlist.domain.report;
 
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity

@@ -2,28 +2,26 @@ package ru.watchlist.domain.report;
 
 import lombok.Data;
 import ru.watchlist.domain.company.Company;
-import ru.watchlist.domain.report.parameter.ParameterValue;
-import ru.watchlist.domain.report.period.Period;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Currency;
+import java.util.List;
 
 @Data
-//@Entity
+@Entity
 public class Report {
 
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
+    @ManyToOne
     private Company company;
+    @ManyToOne
     private Period period;
-    private TypeReport type;
-    private Standard standard;
+    @ManyToOne
+    private TypeReport typeReport;
     private int multiplicity;
     private Currency currency;
-    private ArrayList<ParameterValue> parametersValues;
-
+    @OneToMany
+    List<ParameterValue> parameters;
 }

@@ -1,8 +1,8 @@
 package ru.watchlist.mapper;
 
 import org.mapstruct.*;
-import ru.watchlist.domain.report.period.Period;
-import ru.watchlist.dto.report.period.PeriodDTO;
+import ru.watchlist.domain.report.Period;
+import ru.watchlist.dto.report.PeriodDTO;
 
 import java.util.List;
 
