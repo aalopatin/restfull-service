@@ -1,5 +1,6 @@
 package ru.watchlist.dto.report;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ru.watchlist.domain.report.TypePeriod;
 
@@ -10,10 +11,10 @@ public class PeriodDTO {
 
     private String id;
 
-//    @JsonFormat(pattern="yyyy-MM-dd")
+//    @JsonFormat(pattern="dd.MM.yyyy")
     private LocalDate startPeriod;
 
-//    @JsonFormat(pattern="yyyy-MM-dd")
+//    @JsonFormat(pattern="dd.MM.yyyy")
     private LocalDate endPeriod;
 
     private TypePeriod type;

@@ -91,6 +91,20 @@ public class FormsController {
 
     }
 
+//    @GetMapping("/forms/lists/reports/")
+//    public ResponseEntity<Form> getListReport() {
+//        Form form = new Form();
+//
+//        return new ResponseEntity<>(form, HttpStatus.OK);
+//    }
+
+    @GetMapping("/lists/reports/")
+    public ResponseEntity<Form> getListReportCompany(@RequestParam String companyId) {
+        Form form = new Form();
+
+        return new ResponseEntity<>(form, HttpStatus.OK);
+    }
+
     private void addPayloadsGroups(Map<String, Object> payloads) {
         List<GroupParameters> groups = groupParametersService.getAll();
         payloads.put("groups", groupParametersMapper.toGroupParametersIdDTOList(groups));

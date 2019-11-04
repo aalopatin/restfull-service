@@ -1,7 +1,5 @@
 package ru.watchlist.domain.report;
 
-import java.lang.reflect.Type;
-
 public enum TypePeriod {
     DATE(""),
     MONTH(""),
