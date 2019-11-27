@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.report.Parameter;
-import ru.watchlist.dto.report.ParameterDTO;
+import ru.watchlist.dto.report.ParameterAbstract;
 import ru.watchlist.dto.report.ParameterIdDTO;
 import ru.watchlist.mapper.ParameterMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -37,9 +37,18 @@ public class ParameterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ParameterDTO>> getAllParameter() {
+    public ResponseEntity<List<? extends ParameterAbstract>> findAllParameter(Boolean fullObjects) {
         List<Parameter> parameters = parameterService.getAll();
-        return new ResponseEntity<>(parameterMapper.toParameterDTOList(parameters), HttpStatus.OK);
+
+        List<? extends ParameterAbstract> parametersDTO;
+
+        if(fullObjects) {
+            parametersDTO = parameterMapper.toParameterDTOList(parameters);
+        } else {
+            parametersDTO = parameterMapper.toParameterIdDTOList(parameters);
+        }
+
+        return new ResponseEntity<>(parametersDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

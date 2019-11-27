@@ -17,8 +17,11 @@ public interface ParameterMapper {
 
     //ParameterIdDTO
     @Mapping(target = "groupId", source = "group.id")
+    @Mapping(target = "groupTitle", source = "group.title")
     ParameterIdDTO toParameterIdDTO(Parameter parameter);
+
     List<ParameterIdDTO> toParameterIdDTOList(List<Parameter> parameters);
+
     @Mapping(target = "group.id", source = "groupId")
     Parameter fromParameterIdDTO(ParameterIdDTO parameterIdDTO);
 
