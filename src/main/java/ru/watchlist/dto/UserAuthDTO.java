@@ -1,7 +1,7 @@
-package ru.watchlist.dto.user;
+package ru.watchlist.dto;
 
 import lombok.Data;
-import ru.watchlist.domain.user.Role;
+import ru.watchlist.domain.Role;
 
 import java.util.Set;
 

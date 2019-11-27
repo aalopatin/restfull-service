@@ -1,9 +1,8 @@
-package ru.watchlist.dto.user;
+package ru.watchlist.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-import ru.watchlist.domain.user.Role;
-import ru.watchlist.dto.user.views.UserAdminViews;
+import ru.watchlist.domain.Role;
 
 import java.util.Set;
 

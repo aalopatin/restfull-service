@@ -2,8 +2,7 @@ package ru.watchlist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.watchlist.domain.company.Company;
-import ru.watchlist.domain.user.User;
+import ru.watchlist.domain.Company;
 import ru.watchlist.mapper.CompanyMapper;
 import ru.watchlist.repository.CompanyRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;

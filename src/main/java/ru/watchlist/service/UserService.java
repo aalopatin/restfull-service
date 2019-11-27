@@ -6,13 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import ru.watchlist.domain.user.Role;
-import ru.watchlist.domain.user.User;
-import ru.watchlist.mapper.UserMapper;
+import ru.watchlist.domain.Role;
+import ru.watchlist.domain.User;
 import ru.watchlist.repository.UserRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.security.jwt.JwtTokenProvider;
-import ru.watchlist.service.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package ru.watchlist.dto.user;
+package ru.watchlist.dto;
 
 import lombok.Data;
 import ru.watchlist.validation.UniqueField;

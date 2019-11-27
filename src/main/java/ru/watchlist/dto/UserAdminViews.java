@@ -1,4 +1,4 @@
-package ru.watchlist.dto.user.views;
+package ru.watchlist.dto;
 
 public class UserAdminViews {
 

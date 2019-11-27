@@ -1,16 +1,8 @@
-package ru.watchlist.domain.user;
+package ru.watchlist.domain;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
-package ru.watchlist.dto.report;
+package ru.watchlist.dto;
 
 import lombok.Data;
-import ru.watchlist.domain.report.Standard;
+import ru.watchlist.domain.Standard;
 
 @Data
 public class TypeReportDTO {

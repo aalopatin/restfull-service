@@ -1,8 +1,8 @@
 package ru.watchlist.mapper;
 
 import org.mapstruct.*;
-import ru.watchlist.domain.report.TypeReport;
-import ru.watchlist.dto.report.TypeReportDTO;
+import ru.watchlist.domain.TypeReport;
+import ru.watchlist.dto.TypeReportDTO;
 
 import java.util.List;
 

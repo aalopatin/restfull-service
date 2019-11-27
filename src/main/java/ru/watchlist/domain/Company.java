@@ -1,4 +1,4 @@
-package ru.watchlist.domain.company;
+package ru.watchlist.domain;
 
 import lombok.Data;
 

@@ -2,7 +2,7 @@ package ru.watchlist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.watchlist.domain.report.TypeReport;
+import ru.watchlist.domain.TypeReport;
 import ru.watchlist.mapper.TypeReportMapper;
 import ru.watchlist.repository.TypeReportRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;

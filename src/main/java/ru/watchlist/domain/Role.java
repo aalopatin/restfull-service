@@ -1,4 +1,4 @@
-package ru.watchlist.domain.user;
+package ru.watchlist.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 

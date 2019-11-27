@@ -1,19 +1,19 @@
-package ru.watchlist.domain.report;
+package ru.watchlist.domain;
 
 import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
 @Data
-public class GroupParameters {
+@Entity
+public class TypeReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String title;
-    private boolean basic;
-    @ManyToOne
-    private TypeReport typeReport;
+
+    @Enumerated(EnumType.STRING)
+    private Standard standard;
 
 }

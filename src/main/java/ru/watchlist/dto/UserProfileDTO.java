@@ -1,4 +1,4 @@
-package ru.watchlist.dto.user;
+package ru.watchlist.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

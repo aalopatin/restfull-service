@@ -2,7 +2,7 @@ package ru.watchlist.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.util.FieldUtils;
-import ru.watchlist.domain.user.User;
+import ru.watchlist.domain.User;
 import ru.watchlist.repository.UserRepository;
 
 import javax.validation.ConstraintValidator;

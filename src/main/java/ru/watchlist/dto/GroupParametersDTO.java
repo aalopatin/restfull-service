@@ -1,7 +1,6 @@
-package ru.watchlist.dto.report;
+package ru.watchlist.dto;
 
 import lombok.Data;
-import ru.watchlist.domain.report.TypeReport;
 
 @Data
 public class GroupParametersDTO {

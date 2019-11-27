@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.watchlist.domain.report.Period;
-import ru.watchlist.domain.report.TypePeriod;
-import ru.watchlist.dto.report.PeriodDTO;
+import ru.watchlist.domain.Period;
+import ru.watchlist.dto.PeriodDTO;
 import ru.watchlist.mapper.PeriodMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.PeriodService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

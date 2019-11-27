@@ -1,4 +1,4 @@
-package ru.watchlist.domain.report;
+package ru.watchlist.domain;
 
 import javax.persistence.Id;
 

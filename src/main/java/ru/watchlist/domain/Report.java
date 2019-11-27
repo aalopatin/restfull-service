@@ -1,7 +1,6 @@
-package ru.watchlist.domain.report;
+package ru.watchlist.domain;
 
 import lombok.Data;
-import ru.watchlist.domain.company.Company;
 
 import javax.persistence.*;
 import java.util.Currency;

@@ -1,22 +1,17 @@
 package ru.watchlist.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import ru.watchlist.domain.user.User;
-import ru.watchlist.dto.CaptchaResponseDTO;
-import ru.watchlist.dto.user.UserRegistrationDTO;
+import ru.watchlist.domain.User;
+import ru.watchlist.dto.UserRegistrationDTO;
 import ru.watchlist.mapper.UserMapper;
-import ru.watchlist.rest.exception.ReCaptchaException;
 import ru.watchlist.rest.exception.ValidationErrorsException;
 import ru.watchlist.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

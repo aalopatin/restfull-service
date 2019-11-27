@@ -1,7 +1,7 @@
 package ru.watchlist.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.watchlist.domain.report.GroupParameters;
+import ru.watchlist.domain.GroupParameters;
 
 public interface GroupParametersRepository extends JpaRepository<GroupParameters, Long> {
 }

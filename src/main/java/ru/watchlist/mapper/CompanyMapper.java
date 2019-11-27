@@ -1,8 +1,8 @@
 package ru.watchlist.mapper;
 
 import org.mapstruct.*;
-import ru.watchlist.domain.company.Company;
-import ru.watchlist.dto.company.CompanyDTO;
+import ru.watchlist.domain.Company;
+import ru.watchlist.dto.CompanyDTO;
 
 import java.util.List;
 

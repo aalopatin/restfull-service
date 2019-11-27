@@ -5,9 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.watchlist.domain.user.User;
+import ru.watchlist.domain.User;
 import ru.watchlist.mapper.UserMapper;
-import ru.watchlist.security.jwt.JwtUser;
 import ru.watchlist.service.UserService;
 
 @Service

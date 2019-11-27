@@ -1,8 +1,7 @@
-package ru.watchlist.dto.report;
+package ru.watchlist.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import ru.watchlist.domain.report.TypePeriod;
+import ru.watchlist.domain.TypePeriod;
 
 import java.time.LocalDate;
 

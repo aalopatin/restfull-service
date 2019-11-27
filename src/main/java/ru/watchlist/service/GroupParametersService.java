@@ -2,7 +2,7 @@ package ru.watchlist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.watchlist.domain.report.GroupParameters;
+import ru.watchlist.domain.GroupParameters;
 import ru.watchlist.mapper.GroupParametersMapper;
 import ru.watchlist.repository.GroupParametersRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;

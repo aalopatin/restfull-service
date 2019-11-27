@@ -3,8 +3,8 @@ package ru.watchlist.idgenerator;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
-import ru.watchlist.domain.report.Period;
-import ru.watchlist.domain.report.TypePeriod;
+import ru.watchlist.domain.Period;
+import ru.watchlist.domain.TypePeriod;
 
 import java.io.Serializable;
 import java.time.LocalDate;

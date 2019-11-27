@@ -1,7 +1,7 @@
 package ru.watchlist.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.watchlist.domain.user.User;
+import ru.watchlist.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

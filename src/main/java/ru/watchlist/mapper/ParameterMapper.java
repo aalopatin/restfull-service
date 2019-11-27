@@ -1,9 +1,9 @@
 package ru.watchlist.mapper;
 
 import org.mapstruct.*;
-import ru.watchlist.domain.report.Parameter;
-import ru.watchlist.dto.report.ParameterDTO;
-import ru.watchlist.dto.report.ParameterIdDTO;
+import ru.watchlist.domain.Parameter;
+import ru.watchlist.dto.ParameterDTO;
+import ru.watchlist.dto.ParameterIdDTO;
 
 import java.util.List;
 

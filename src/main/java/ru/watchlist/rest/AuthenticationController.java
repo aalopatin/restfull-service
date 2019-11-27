@@ -8,10 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import ru.watchlist.domain.user.User;
+import ru.watchlist.domain.User;
 import ru.watchlist.dto.AuthenticationRequestDTO;
 import ru.watchlist.dto.AuthenticationResponseDTO;
-import ru.watchlist.dto.user.UserAuthDTO;
+import ru.watchlist.dto.UserAuthDTO;
 import ru.watchlist.mapper.UserMapper;
 import ru.watchlist.security.jwt.JwtTokenProvider;
 import ru.watchlist.service.UserService;
