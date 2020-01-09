@@ -1,26 +1,30 @@
 package ru.watchlist.domain;
 
 import lombok.Data;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
-import java.util.Currency;
 import java.util.List;
 
 @Data
 @Entity
-public class Report {
+public class SettingReport {
 
     @Id
     @GeneratedValue
     private Long id;
+
     @ManyToOne
     private Company company;
-    @ManyToOne
-    private Period period;
-    @ManyToOne
+    private boolean common;
+
+    @OneToOne
     private TypeReport typeReport;
-    private int multiplicity;
-    private String currencyCode;
+
+    @OneToOne
+    private GroupParameters groupParameters;
+
     @OneToMany
-    List<ParameterValue> parameters;
+    private List<RowSettingReport> rowsSettingReport;
+
 }

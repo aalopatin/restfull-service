@@ -44,7 +44,7 @@ public class FormsController {
 
         Form form = new Form();
 
-        List<Parameter> parameters = parameterService.getAll();
+        List<Parameter> parameters = parameterService.findAll();
         form.setData(parameterMapper.toParameterIdDTOList(parameters));
 
         Map<String, Object> payloads = new HashMap<>();
@@ -105,7 +105,7 @@ public class FormsController {
     }
 
     private void addPayloadsGroups(Map<String, Object> payloads) {
-        List<GroupParameters> groups = groupParametersService.getAll();
+        List<GroupParameters> groups = groupParametersService.findAll();
         payloads.put("groups", groupParametersMapper.toGroupParametersIdDTOList(groups));
     }
 

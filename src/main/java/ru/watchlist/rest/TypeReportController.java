@@ -36,7 +36,7 @@ public class TypeReportController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TypeReportDTO>> getAllTypeReport() {
+    public ResponseEntity<List<TypeReportDTO>> findAllTypeReport() {
         List<TypeReport> typesReports = typeReportService.getAll();
         return new ResponseEntity<>(typeReportMapper.toTypeReportDTOList(typesReports), HttpStatus.OK);
     }

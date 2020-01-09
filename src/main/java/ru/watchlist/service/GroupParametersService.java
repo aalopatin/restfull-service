@@ -30,8 +30,12 @@ public class GroupParametersService {
         return groupParameters;
     }
 
-    public List<GroupParameters> getAll() {
+    public List<GroupParameters> findAll() {
         return groupParametersRepository.findAll();
+    }
+
+    public List<GroupParameters> findAll(Long typeReportsId) {
+        return groupParametersRepository.findAllByTypeReport_Id(typeReportsId);
     }
 
     public GroupParameters createGroupParameters(GroupParameters groupParameters) {

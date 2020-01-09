@@ -1,19 +1,30 @@
 package ru.watchlist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.watchlist.domain.GroupParameters;
 import ru.watchlist.domain.Parameter;
 import ru.watchlist.mapper.ParameterMapper;
+import ru.watchlist.repository.GroupParametersRepository;
 import ru.watchlist.repository.ParameterRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
+import ru.watchlist.specification.DomainSpecification;
+import ru.watchlist.specification.SearchCriteria;
+import ru.watchlist.specification.SpecificationBuilder;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ParameterService {
 
     @Autowired
     ParameterRepository parameterRepository;
+
+    @Autowired
+    GroupParametersRepository groupParametersRepository;
 
     @Autowired
     ParameterMapper parameterMapper;
@@ -30,8 +41,23 @@ public class ParameterService {
         return parameter;
     }
 
-    public List<Parameter> getAll() {
+    public List<Parameter> findAll() {
         return parameterRepository.findAll();
+    }
+
+    public List<Parameter> findAll(String search) {
+
+        SpecificationBuilder<Parameter> builder = new SpecificationBuilder<>();
+        Pattern pattern = Pattern.compile("([\\\\.\\w]+?)(:|<|>)([\\\\.\\w]+?),");
+        Matcher matcher = pattern.matcher(search + ",");
+        while(matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }
+
+        Specification<Parameter> specification = builder.build();
+
+        return parameterRepository.findAll(specification);
+
     }
 
     public Parameter createParameter(Parameter parameter) {

@@ -1,10 +1,13 @@
 package ru.watchlist.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.GroupParameters;
+import ru.watchlist.domain.TypeReport;
+import ru.watchlist.dto.GroupParametersAbstract;
 import ru.watchlist.dto.GroupParametersDTO;
 import ru.watchlist.dto.GroupParametersIdDTO;
 import ru.watchlist.mapper.GroupParametersMapper;
@@ -37,9 +40,20 @@ public class GroupParametersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GroupParametersDTO>> getAllGroupParameters() {
-        List<GroupParameters> groupsParameters = groupParametersService.getAll();
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersDTOList(groupsParameters), HttpStatus.OK);
+    public ResponseEntity<List<? extends GroupParametersAbstract>> findAll(@RequestParam(value = "full", required = false) boolean full,
+                                                                           @RequestParam(value = "search", required = false) String search) {
+
+        List<GroupParameters> groupsParameters = groupParametersService.findAll();
+
+        List<? extends GroupParametersAbstract> groupParametersDTO;
+
+        if(full) {
+            groupParametersDTO = groupParametersMapper.toGroupParametersDTOList(groupsParameters);
+        } else {
+            groupParametersDTO = groupParametersMapper.toGroupParametersIdDTOList(groupsParameters);
+        }
+
+        return new ResponseEntity<>(groupParametersDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

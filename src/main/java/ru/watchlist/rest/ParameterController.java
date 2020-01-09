@@ -11,6 +11,7 @@ import ru.watchlist.mapper.ParameterMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.ParameterService;
 
+import javax.management.Query;
 import java.util.List;
 
 @RestController
@@ -37,12 +38,14 @@ public class ParameterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<? extends ParameterAbstract>> findAllParameter(Boolean fullObjects) {
-        List<Parameter> parameters = parameterService.getAll();
+    public ResponseEntity<List<? extends ParameterAbstract>> findAllParameter(@RequestParam(value = "full", required = false) boolean full,
+                                                                              @RequestParam(value = "search", required = false) String search) {
+
+        List<Parameter> parameters = parameterService.findAll(search);
 
         List<? extends ParameterAbstract> parametersDTO;
 
-        if(fullObjects) {
+        if(full) {
             parametersDTO = parameterMapper.toParameterDTOList(parameters);
         } else {
             parametersDTO = parameterMapper.toParameterIdDTOList(parameters);

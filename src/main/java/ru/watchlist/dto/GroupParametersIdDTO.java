@@ -3,11 +3,9 @@ package ru.watchlist.dto;
 import lombok.Data;
 
 @Data
-public class GroupParametersIdDTO {
+public class GroupParametersIdDTO extends GroupParametersAbstract {
 
-    private Long id;
-    private String title;
-    private boolean basic;
     private Long typeReportId;
+    private String typeReportTitle;
 
 }

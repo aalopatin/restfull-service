@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.Company;
+import ru.watchlist.dto.CompanyAbstract;
 import ru.watchlist.dto.CompanyDTO;
 import ru.watchlist.mapper.CompanyMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -36,7 +37,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CompanyDTO>> getAllCompany() {
+    public ResponseEntity<List<CompanyDTO>> findAllCompany() {
         List<Company> companies = companyService.getAll();
         return new ResponseEntity<>(companyMapper.toCompanyDTOList(companies), HttpStatus.OK);
     }
