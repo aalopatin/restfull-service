@@ -47,15 +47,8 @@ public class ParameterService {
 
     public List<Parameter> findAll(String search) {
 
-        SpecificationBuilder<Parameter> builder = new SpecificationBuilder<>();
-        Pattern pattern = Pattern.compile("([\\\\.\\w]+?)(:|<|>)([\\\\.\\w]+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while(matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-
+        SpecificationBuilder<Parameter> builder = new SpecificationBuilder<>(search);
         Specification<Parameter> specification = builder.build();
-
         return parameterRepository.findAll(specification);
 
     }

@@ -14,17 +14,17 @@ public class SettingReport {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Company company;
+    private String title;
+
     private boolean common;
 
-    @OneToOne
-    private TypeReport typeReport;
+    @ManyToOne
+    private Company company;
 
     @OneToOne
-    private GroupParameters groupParameters;
+    private GroupParameters group;
 
     @OneToMany
-    private List<RowSettingReport> rowsSettingReport;
+    private List<RowSettingReport> rows;
 
 }

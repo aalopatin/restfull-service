@@ -13,10 +13,11 @@ public class RowSettingReport {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Parameter parameter;
 
-    @OneToMany
-    private List<RowSettingReport> childParameters;
+    private boolean header;
+
+    private String text;
 
 }
