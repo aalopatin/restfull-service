@@ -1,4 +1,4 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.company;
 
 import lombok.Data;
 

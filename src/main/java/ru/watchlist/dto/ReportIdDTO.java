@@ -2,7 +2,6 @@ package ru.watchlist.dto;
 
 import lombok.Data;
 
-import java.util.Currency;
 import java.util.List;
 
 @Data

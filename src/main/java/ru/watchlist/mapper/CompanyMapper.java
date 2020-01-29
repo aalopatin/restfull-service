@@ -2,7 +2,7 @@ package ru.watchlist.mapper;
 
 import org.mapstruct.*;
 import ru.watchlist.domain.Company;
-import ru.watchlist.dto.CompanyDTO;
+import ru.watchlist.dto.company.CompanyDTO;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
 public interface CompanyMapper {
 
     //CompanyDTO
-    CompanyDTO toCompanyDTO(Company company);
-    List<CompanyDTO> toCompanyDTOList(List<Company> companies);
-    Company fromCompanyDTO(CompanyDTO companyDTO);
+    CompanyDTO toDTO(Company company);
+    List<CompanyDTO> toDTOList(List<Company> companies);
+    Company fromDTO(CompanyDTO companyDTO);
 
     //Company
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    void fillCompany(Company source, @MappingTarget Company target);
+    void fill(Company source, @MappingTarget Company target);
 
 }

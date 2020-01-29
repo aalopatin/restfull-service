@@ -2,7 +2,7 @@ package ru.watchlist.mapper;
 
 import org.mapstruct.*;
 import ru.watchlist.domain.TypeReport;
-import ru.watchlist.dto.TypeReportDTO;
+import ru.watchlist.dto.typereport.TypeReportDTO;
 
 import java.util.List;
 
@@ -10,13 +10,14 @@ import java.util.List;
 public interface TypeReportMapper {
 
     //TypeReportDTO
-    TypeReportDTO toTypeReportDTO(TypeReport TypeReport);
-    List<TypeReportDTO> toTypeReportDTOList(List<TypeReport> companies);
-    TypeReport fromTypeReportDTO(TypeReportDTO TypeReportDTO);
+    TypeReportDTO toDTO(TypeReport TypeReport);
+    List<TypeReportDTO> toDTOList(List<TypeReport> companies);
+    @Mapping(target = "id", ignore = true)
+    TypeReport fromDTO(TypeReportDTO TypeReportDTO);
 
     //TypeReport
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    void fillTypeReport(TypeReport source, @MappingTarget TypeReport target);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void fill(TypeReport source, @MappingTarget TypeReport target);
 
 }

@@ -20,9 +20,8 @@ public class SettingReportService {
     @Autowired
     SettingReportMapper settingReportMapper;
 
-    public SettingReport createSettingReport(SettingReport settingReport) {
-        SettingReport createdSettingReport = settingReportRepository.save(settingReport);
-        return createdSettingReport;
+    public SettingReport create(SettingReport settingReport) {
+        return settingReportRepository.save(settingReport);
     }
 
     public List<SettingReport> findAll() {
@@ -48,10 +47,18 @@ public class SettingReportService {
         return settingReport;
     }
 
-    public SettingReport saveSettingReport(Long id, SettingReport settingReport) throws EntityNotFoundException {
+    public SettingReport save(Long id, SettingReport settingReport) throws EntityNotFoundException {
         SettingReport settingReportFromDB = findById(id);
-        settingReportMapper.fillSettingReport(settingReport, settingReportFromDB);
+        settingReportMapper.fill(settingReport, settingReportFromDB);
         settingReportRepository.save(settingReportFromDB);
         return settingReportFromDB;
+    }
+
+    public void delete(Long id) throws EntityNotFoundException {
+        try {
+            settingReportRepository.deleteById(id);
+        } catch (IllegalArgumentException ex) {
+            throw new EntityNotFoundException(SettingReport.class, "id", id.toString());
+        }
     }
 }

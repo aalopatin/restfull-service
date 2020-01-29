@@ -1,10 +1,10 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.typereport;
 
 import lombok.Data;
 import ru.watchlist.domain.Standard;
 
 @Data
-public class TypeReportDTO {
+public class TypeReportAbstract {
 
     private Long id;
     private String title;

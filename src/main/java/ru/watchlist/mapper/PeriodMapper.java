@@ -4,6 +4,7 @@ import org.mapstruct.*;
 import ru.watchlist.domain.Period;
 import ru.watchlist.dto.PeriodDTO;
 
+import javax.management.ConstructorParameters;
 import java.util.List;
 
 @Mapper(componentModel = "spring")

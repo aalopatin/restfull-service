@@ -2,40 +2,37 @@ package ru.watchlist.mapper;
 
 import org.mapstruct.*;
 import ru.watchlist.domain.SettingReport;
-import ru.watchlist.dto.settingreport.SettingReportFullDTO;
+import ru.watchlist.dto.settingreport.SettingReportDTO;
 import ru.watchlist.dto.settingreport.SettingReportIdDTO;
-import ru.watchlist.dto.settingreport.SettingReportListDTO;
+import ru.watchlist.rest.exception.EntityNotFoundException;
+import ru.watchlist.service.CompanyService;
+import ru.watchlist.service.GroupParameterService;
+import ru.watchlist.service.TypeReportService;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { CompanyService.class, GroupParameterService.class, RowSettingReportMapper.class, TypeReportService.class})
 public interface SettingReportMapper {
+
+    //SettingReportDTO
+    SettingReportDTO toDTO(SettingReport settingReport);
+    List<SettingReportDTO> toDTOList(List<SettingReport> parameters);
 
     //SettingReportIdDTO
     @Mapping(target = "companyId", source = "company.id")
-    @Mapping(target = "companyTitle", source = "company.title")
     @Mapping(target = "groupId", source = "group.id")
-    @Mapping(target = "groupTitle", source = "group.title")
-    SettingReportIdDTO toSettingReportIdDTO(SettingReport settingReport);
+    @Mapping(target = "typeReportId", source = "typeReport.id")
+    SettingReportIdDTO toIdDTO(SettingReport settingReport);
 
-    @Mapping(target = "company.id", source = "companyId")
-    @Mapping(target = "group.id", source = "groupId")
-    SettingReport fromSettingReportIdDTO(SettingReportIdDTO settingReportIdDTO);
-
-
-
-    List<SettingReportIdDTO> toSettingReportIdDTOList(List<SettingReport> parameters);
-
-    //SettingReportListDTO
-    SettingReportListDTO toSettingReportListDTO(SettingReport settingReport);
-    List<SettingReportListDTO> toSettingReportListDTOList(List<SettingReport> parameters);
-
-    //SettingReportFullDTO
-    SettingReportFullDTO toSettingReportFullDTO(SettingReport settingReport);
-    List<SettingReportFullDTO> toSettingReportFullDTOList(List<SettingReport> settingsReports);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "company", source = "companyId", qualifiedByName = { "findCompanyById" })
+    @Mapping(target = "group", source = "groupId", qualifiedByName = { "findGroupById" })
+    @Mapping(target = "typeReport", source = "typeReportId", qualifiedByName = { "findTypeReportById" })
+    SettingReport fromIdDTO(SettingReportIdDTO settingReportIdDTO) throws EntityNotFoundException;
+    List<SettingReportIdDTO> toIdDTOList(List<SettingReport> parameters);
 
     //SettingReport
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    void fillSettingReport(SettingReport source, @MappingTarget SettingReport target);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void fill(SettingReport source, @MappingTarget SettingReport target);
 }

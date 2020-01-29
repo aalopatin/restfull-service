@@ -6,13 +6,15 @@ spring:
     password: postgres
 
   jpa:
+
     generate-ddl: true
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
-
+#    hibernate:
+#      ddl-auto: create
   mail:
     host: smtp.yandex.ru
     username: Andersen1313@yandex.ru

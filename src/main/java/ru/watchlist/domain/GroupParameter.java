@@ -6,15 +6,17 @@ import javax.persistence.*;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 
-@Data
 @Entity
-public class ParameterValue {
+@Data
+public class GroupParameter {
 
     @Id
     @GeneratedValue(generator = ID_GENERATOR)
     private Long id;
+    private String title;
+    private boolean common;
     @ManyToOne
-    private Parameter parameter;
-    private float value;
+    @JoinColumn(name = "TYPE_REPORT_ID", nullable = false)
+    private TypeReport typeReport;
 
 }

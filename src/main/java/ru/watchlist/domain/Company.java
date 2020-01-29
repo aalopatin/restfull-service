@@ -1,18 +1,16 @@
 package ru.watchlist.domain;
 
 import lombok.Data;
+import static ru.watchlist.config.Constants.ID_GENERATOR;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = ID_GENERATOR)
     private Long id;
     private String title;
     private String fullTitle;

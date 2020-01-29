@@ -1,5 +1,6 @@
 package ru.watchlist.service;
 
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.TypeReport;
@@ -19,31 +20,29 @@ public class TypeReportService {
     TypeReportMapper typeReportMapper;
 
     //Repository
+    public TypeReport createTypeReport(TypeReport typeReport) {
+        return typeReportRepository.save(typeReport);
+    }
+
+    @Named("findTypeReportById")
     public TypeReport findById(Long id) throws EntityNotFoundException {
-
-        TypeReport typeReport = typeReportRepository.findById(id).orElse(null);
-
-        if (typeReport==null) {
-            throw new EntityNotFoundException(TypeReport.class, "id", id.toString());
+        if(id != null) {
+            TypeReport typeReport = typeReportRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(TypeReport.class, "id", id.toString()));
+            return typeReport;
+        } else {
+            return null;
         }
-
-        return typeReport;
     }
 
     public List<TypeReport> getAll() {
         return typeReportRepository.findAll();
     }
 
-    public TypeReport createTypeReport(TypeReport typeReport) {
-        TypeReport createdTypeReport = typeReportRepository.save(typeReport);
-        return createdTypeReport;
-    }
-
     public TypeReport saveTypeReport(Long id, TypeReport typeReport) throws EntityNotFoundException {
         TypeReport typeReportFromDB = findById(id);
-        typeReportMapper.fillTypeReport(typeReport, typeReportFromDB);
-        typeReportRepository.save(typeReportFromDB);
-        return typeReportFromDB;
+        typeReportMapper.fill(typeReport, typeReportFromDB);
+        return typeReportRepository.save(typeReportFromDB);
     }
 
     public void deleteTypeReport(Long id) throws EntityNotFoundException {
@@ -52,7 +51,6 @@ public class TypeReportService {
         } catch (IllegalArgumentException ex) {
             throw new EntityNotFoundException(TypeReport.class, "id", id.toString());
         }
-
     }
 
 }

@@ -5,17 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.Parameter;
-import ru.watchlist.dto.ParameterAbstract;
-import ru.watchlist.dto.ParameterIdDTO;
+import ru.watchlist.dto.Variant;
+import ru.watchlist.dto.parameter.ParameterAbstract;
+import ru.watchlist.dto.parameter.ParameterIdDTO;
 import ru.watchlist.mapper.ParameterMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.ParameterService;
 
-import javax.management.Query;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/parameters")
+@RequestMapping("/api/parameters")
 public class ParameterController {
     
     @Autowired
@@ -25,40 +25,32 @@ public class ParameterController {
     private ParameterMapper parameterMapper;
 
     @PostMapping
-    public ResponseEntity<ParameterIdDTO> createParameter(@RequestBody ParameterIdDTO parameterIdDTO) {
-        Parameter parameter = parameterMapper.fromParameterIdDTO(parameterIdDTO);
-        parameter = parameterService.createParameter(parameter);
-        return new ResponseEntity<>(parameterMapper.toParameterIdDTO(parameter), HttpStatus.OK);
+    public ResponseEntity<ParameterIdDTO> createParameter(@RequestBody ParameterIdDTO parameterIdDTO) throws EntityNotFoundException {
+        Parameter parameter = parameterMapper.fromIdDTO(parameterIdDTO);
+        parameterService.createParameter(parameter);
+        return new ResponseEntity<>(parameterMapper.toIdDTO(parameter), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ParameterIdDTO> getParameter(@PathVariable Long id) throws EntityNotFoundException {
+    public ResponseEntity<? extends ParameterAbstract> getParameter(@PathVariable Long id,
+                                                       @RequestParam(value = "variant", required = false) Variant variant) throws EntityNotFoundException {
         Parameter parameter = parameterService.findById(id);
-        return new ResponseEntity<>(parameterMapper.toParameterIdDTO(parameter), HttpStatus.OK);
+        return new ResponseEntity<>(variantDTO(variant, parameter), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<? extends ParameterAbstract>> findAllParameter(@RequestParam(value = "full", required = false) boolean full,
+    public ResponseEntity<List<? extends ParameterAbstract>> findAllParameter(@RequestParam(value = "variant", required = false) Variant variant,
                                                                               @RequestParam(value = "search", required = false) String search) {
 
-        List<Parameter> parameters = parameterService.findAll(search);
-
-        List<? extends ParameterAbstract> parametersDTO;
-
-        if(full) {
-            parametersDTO = parameterMapper.toParameterDTOList(parameters);
-        } else {
-            parametersDTO = parameterMapper.toParameterIdDTOList(parameters);
-        }
-
-        return new ResponseEntity<>(parametersDTO, HttpStatus.OK);
+        List<Parameter> parameterList = parameterService.findAll(search);
+        return new ResponseEntity<>(variantDTOList(variant, parameterList), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ParameterIdDTO> saveParameter(@PathVariable Long id, @RequestBody ParameterIdDTO parameterIdDTO) throws EntityNotFoundException {
-        Parameter parameter = parameterMapper.fromParameterIdDTO(parameterIdDTO);
+        Parameter parameter = parameterMapper.fromIdDTO(parameterIdDTO);
         parameter = parameterService.saveParameter(id, parameter);
-        return new ResponseEntity<>(parameterMapper.toParameterIdDTO(parameter), HttpStatus.OK);
+        return new ResponseEntity<>(parameterMapper.toIdDTO(parameter), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -67,4 +59,21 @@ public class ParameterController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    private ParameterAbstract variantDTO(Variant variant, Parameter entity) {
+        switch (variant) {
+            case ID:
+                return parameterMapper.toIdDTO(entity);
+            default:
+                return parameterMapper.toDTO(entity);
+        }
+    }
+
+    private List<? extends ParameterAbstract> variantDTOList(Variant variant, List<Parameter> entityList) {
+        switch (variant) {
+            case ID:
+                return parameterMapper.toIdDTOList(entityList);
+            default:
+                return parameterMapper.toDTOList(entityList);
+        }
+    }
 }

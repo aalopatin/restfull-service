@@ -1,21 +1,17 @@
 package ru.watchlist.service;
 
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.watchlist.domain.GroupParameters;
 import ru.watchlist.domain.Parameter;
 import ru.watchlist.mapper.ParameterMapper;
-import ru.watchlist.repository.GroupParametersRepository;
+import ru.watchlist.repository.GroupParameterRepository;
 import ru.watchlist.repository.ParameterRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
-import ru.watchlist.specification.DomainSpecification;
-import ru.watchlist.specification.SearchCriteria;
 import ru.watchlist.specification.SpecificationBuilder;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class ParameterService {
@@ -24,21 +20,21 @@ public class ParameterService {
     ParameterRepository parameterRepository;
 
     @Autowired
-    GroupParametersRepository groupParametersRepository;
+    GroupParameterRepository groupParametersRepository;
 
     @Autowired
     ParameterMapper parameterMapper;
 
     //Repository
+    @Named("findParameterById")
     public Parameter findById(Long id) throws EntityNotFoundException {
-
-        Parameter parameter = parameterRepository.findById(id).orElse(null);
-
-        if (parameter==null) {
-            throw new EntityNotFoundException(Parameter.class, "id", id.toString());
+        if(id != null) {
+            Parameter parameter = parameterRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(Parameter.class, "id", id.toString()));
+            return parameter;
+        } else {
+            return null;
         }
-
-        return parameter;
     }
 
     public List<Parameter> findAll() {
@@ -60,7 +56,7 @@ public class ParameterService {
 
     public Parameter saveParameter(Long id, Parameter parameter) throws EntityNotFoundException {
         Parameter parameterFromDB = findById(id);
-        parameterMapper.fillParameter(parameter, parameterFromDB);
+        parameterMapper.fill(parameter, parameterFromDB);
         parameterRepository.save(parameterFromDB);
         return parameterFromDB;
     }

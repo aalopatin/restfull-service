@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.Company;
-import ru.watchlist.dto.CompanyAbstract;
-import ru.watchlist.dto.CompanyDTO;
+import ru.watchlist.dto.company.CompanyDTO;
 import ru.watchlist.mapper.CompanyMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.CompanyService;
@@ -14,7 +13,7 @@ import ru.watchlist.service.CompanyService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/companies")
+@RequestMapping("/api/companies")
 public class CompanyController {
 
     @Autowired
@@ -25,28 +24,28 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyDTO companyDTO) {
-        Company company = companyMapper.fromCompanyDTO(companyDTO);
-        company = companyService.createCompany(company);
-        return new ResponseEntity<>(companyMapper.toCompanyDTO(company), HttpStatus.OK);
+        Company company = companyMapper.fromDTO(companyDTO);
+        companyService.createCompany(company);
+        return new ResponseEntity<>(companyMapper.toDTO(company), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDTO> getCompany(@PathVariable Long id) throws EntityNotFoundException {
         Company company = companyService.findById(id);
-        return new ResponseEntity<>(companyMapper.toCompanyDTO(company), HttpStatus.OK);
+        return new ResponseEntity<>(companyMapper.toDTO(company), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<CompanyDTO>> findAllCompany() {
         List<Company> companies = companyService.getAll();
-        return new ResponseEntity<>(companyMapper.toCompanyDTOList(companies), HttpStatus.OK);
+        return new ResponseEntity<>(companyMapper.toDTOList(companies), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CompanyDTO> saveCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO) throws EntityNotFoundException {
-        Company company = companyMapper.fromCompanyDTO(companyDTO);
+        Company company = companyMapper.fromDTO(companyDTO);
         company = companyService.saveCompany(id, company);
-        return new ResponseEntity<>(companyMapper.toCompanyDTO(company), HttpStatus.OK);
+        return new ResponseEntity<>(companyMapper.toDTO(company), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

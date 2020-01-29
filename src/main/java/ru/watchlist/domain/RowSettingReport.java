@@ -5,19 +5,19 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
+import static ru.watchlist.config.Constants.ID_GENERATOR;
+
 @Data
-@Entity
+@Embeddable
 public class RowSettingReport {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TypeRowReport typeRow;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Parameter parameter;
 
-    private boolean header;
-
-    private String text;
+    private String title;
 
 }

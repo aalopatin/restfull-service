@@ -2,32 +2,33 @@ package ru.watchlist.mapper;
 
 import org.mapstruct.*;
 import ru.watchlist.domain.Parameter;
-import ru.watchlist.dto.ParameterDTO;
-import ru.watchlist.dto.ParameterIdDTO;
+import ru.watchlist.dto.parameter.ParameterIdDTO;
+import ru.watchlist.dto.parameter.ParameterDTO;
+import ru.watchlist.rest.exception.EntityNotFoundException;
+import ru.watchlist.service.GroupParameterService;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { GroupParameterService.class })
 public interface ParameterMapper {
 
     //ParameterDTO
-    ParameterDTO toParameterDTO(Parameter parameter);
-    List<ParameterDTO> toParameterDTOList(List<Parameter> parameters);
-    Parameter fromParameterDTO(ParameterDTO parameterDTO);
+    ParameterDTO toDTO(Parameter parameter);
+    List<ParameterDTO> toDTOList(List<Parameter> parameterList);
 
     //ParameterIdDTO
     @Mapping(target = "groupId", source = "group.id")
-    @Mapping(target = "groupTitle", source = "group.title")
-    ParameterIdDTO toParameterIdDTO(Parameter parameter);
+    ParameterIdDTO toIdDTO(Parameter parameter);
+    List<ParameterIdDTO> toIdDTOList(List<Parameter> parameters);
 
-    List<ParameterIdDTO> toParameterIdDTOList(List<Parameter> parameters);
-
-    @Mapping(target = "group.id", source = "groupId")
-    Parameter fromParameterIdDTO(ParameterIdDTO parameterIdDTO);
+    @Mapping(target ="id", ignore = true)
+    @Mapping(target = "group", source = "groupId", qualifiedByName = { "findGroupById" })
+    Parameter fromIdDTO(ParameterIdDTO parameterIdDTO) throws EntityNotFoundException;
 
     //Parameter
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    @Mapping(target = "id", ignore = true)
-    void fillParameter(Parameter source, @MappingTarget Parameter target);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cumulative", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void fill(Parameter source, @MappingTarget Parameter target);
     
 }

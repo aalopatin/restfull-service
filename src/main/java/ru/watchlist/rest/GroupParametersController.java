@@ -1,72 +1,80 @@
 package ru.watchlist.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.watchlist.domain.GroupParameters;
-import ru.watchlist.domain.TypeReport;
-import ru.watchlist.dto.GroupParametersAbstract;
-import ru.watchlist.dto.GroupParametersDTO;
-import ru.watchlist.dto.GroupParametersIdDTO;
-import ru.watchlist.mapper.GroupParametersMapper;
+import ru.watchlist.domain.GroupParameter;
+import ru.watchlist.dto.Variant;
+import ru.watchlist.dto.groupparameter.GroupParameterAbstract;
+import ru.watchlist.dto.groupparameter.GroupParameterIdDTO;
+import ru.watchlist.mapper.GroupParameterMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
-import ru.watchlist.service.GroupParametersService;
+import ru.watchlist.service.GroupParameterService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/groupsparameters")
+@RequestMapping("/api/groupsparameters")
 public class GroupParametersController {
 
     @Autowired
-    private GroupParametersService groupParametersService;
+    private GroupParameterService groupParameterService;
 
     @Autowired
-    private GroupParametersMapper groupParametersMapper;
+    private GroupParameterMapper groupParameterMapper;
 
     @PostMapping
-    public ResponseEntity<GroupParametersIdDTO> createGroupParameters(@RequestBody GroupParametersIdDTO groupParametersIdDTO) {
-        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersIdDTO(groupParametersIdDTO);
-        groupParameters = groupParametersService.createGroupParameters(groupParameters);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
+    public ResponseEntity<GroupParameterIdDTO> createGroupParameters(@RequestBody GroupParameterIdDTO groupParameterIdDTO) throws EntityNotFoundException {
+        GroupParameter groupParameter = groupParameterMapper.fromIdDTO(groupParameterIdDTO);
+        groupParameterService.createGroupParameter(groupParameter);
+        return new ResponseEntity<>(groupParameterMapper.toIdDTO(groupParameter), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupParametersIdDTO> getGroupParameters(@PathVariable Long id) throws EntityNotFoundException {
-        GroupParameters groupParameters = groupParametersService.findById(id);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
+    public ResponseEntity<? extends GroupParameterAbstract> getGroupParameter(@PathVariable Long id,
+                                                                              @RequestParam(value = "variant", required = false) Variant variant) throws EntityNotFoundException {
+        GroupParameter groupParameter = groupParameterService.findById(id);
+        return new ResponseEntity<>(variantDTO(variant, groupParameter), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<? extends GroupParametersAbstract>> findAll(@RequestParam(value = "full", required = false) boolean full,
-                                                                           @RequestParam(value = "search", required = false) String search) {
+    public ResponseEntity<List<? extends GroupParameterAbstract>> findAll(@RequestParam(value = "variant", required = false) Variant variant,
+                                                                          @RequestParam(value = "search", required = false) String search) {
 
-        List<GroupParameters> groupsParameters = groupParametersService.findAll();
-
-        List<? extends GroupParametersAbstract> groupParametersDTO;
-
-        if(full) {
-            groupParametersDTO = groupParametersMapper.toGroupParametersDTOList(groupsParameters);
-        } else {
-            groupParametersDTO = groupParametersMapper.toGroupParametersIdDTOList(groupsParameters);
-        }
-
-        return new ResponseEntity<>(groupParametersDTO, HttpStatus.OK);
+        List<GroupParameter> groupParameterList = groupParameterService.findAll();
+        return new ResponseEntity<>(variantDTOList(variant, groupParameterList), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GroupParametersIdDTO> saveGroupParameters(@PathVariable Long id, @RequestBody GroupParametersIdDTO groupParametersIdDTO) throws EntityNotFoundException {
-        GroupParameters groupParameters = groupParametersMapper.fromGroupParametersIdDTO(groupParametersIdDTO);
-        groupParameters = groupParametersService.saveGroupParameters(id, groupParameters);
-        return new ResponseEntity<>(groupParametersMapper.toGroupParametersIdDTO(groupParameters), HttpStatus.OK);
+    public ResponseEntity<GroupParameterIdDTO> saveGroupParameters(@PathVariable Long id, @RequestBody GroupParameterIdDTO groupParameterIdDTO) throws EntityNotFoundException {
+        GroupParameter groupParameter = groupParameterMapper.fromIdDTO(groupParameterIdDTO);
+        groupParameter = groupParameterService.saveGroupParameter(id, groupParameter);
+        return new ResponseEntity<>(groupParameterMapper.toIdDTO(groupParameter), HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteGroupParameters(@PathVariable Long id) throws EntityNotFoundException {
-        groupParametersService.deleteGroupParameters(id);
+        groupParameterService.deleteGroupParameter(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private GroupParameterAbstract variantDTO(Variant variant, GroupParameter entity) {
+        switch (variant) {
+            case ID:
+                return groupParameterMapper.toIdDTO(entity);
+            default:
+                return groupParameterMapper.toDTO(entity);
+        }
+    }
+
+    private List<? extends GroupParameterAbstract> variantDTOList(Variant variant, List<GroupParameter> entityList) {
+        switch (variant) {
+            case ID:
+                return groupParameterMapper.toIdDTOList(entityList);
+            default:
+                return groupParameterMapper.toDTOList(entityList);
+        }
     }
 
 }

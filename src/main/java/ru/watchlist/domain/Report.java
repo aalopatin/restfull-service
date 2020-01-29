@@ -6,12 +6,14 @@ import javax.persistence.*;
 import java.util.Currency;
 import java.util.List;
 
+import static ru.watchlist.config.Constants.ID_GENERATOR;
+
 @Data
 @Entity
 public class Report {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = ID_GENERATOR)
     private Long id;
     @ManyToOne
     private Company company;

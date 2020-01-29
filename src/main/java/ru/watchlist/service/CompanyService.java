@@ -1,5 +1,6 @@
 package ru.watchlist.service;
 
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.Company;
@@ -20,15 +21,17 @@ public class CompanyService {
 
     //Repository
 
+    @Named("findCompanyById")
     public Company findById(Long id) throws EntityNotFoundException {
 
-        Company company = companyRepository.findById(id).orElse(null);
-
-        if (company==null) {
-            throw new EntityNotFoundException(Company.class, "id", id.toString());
+        if(id != null) {
+            Company company = companyRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(Company.class, "id", id.toString()));
+            return company;
+        } else {
+            return null;
         }
 
-        return company;
     }
 
     public List<Company> getAll() {
@@ -36,15 +39,13 @@ public class CompanyService {
     }
 
     public Company createCompany(Company company) {
-        Company createdCompany = companyRepository.save(company);
-        return createdCompany;
+        return companyRepository.save(company);
     }
 
     public Company saveCompany(Long id, Company company) throws EntityNotFoundException {
         Company companyFromDB = findById(id);
-        companyMapper.fillCompany(company, companyFromDB);
-        companyRepository.save(companyFromDB);
-        return companyFromDB;
+        companyMapper.fill(company, companyFromDB);
+        return companyRepository.save(companyFromDB);
     }
 
     public void deleteCompany(Long id) throws EntityNotFoundException {

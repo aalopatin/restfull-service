@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.TypeReport;
-import ru.watchlist.dto.TypeReportDTO;
+import ru.watchlist.dto.typereport.TypeReportDTO;
 import ru.watchlist.mapper.TypeReportMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.TypeReportService;
@@ -13,7 +13,7 @@ import ru.watchlist.service.TypeReportService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/typesreports")
+@RequestMapping("/api/typesreports")
 public class TypeReportController {
 
     @Autowired
@@ -24,28 +24,28 @@ public class TypeReportController {
 
     @PostMapping
     public ResponseEntity<TypeReportDTO> createTypeReport(@RequestBody TypeReportDTO typeReportDTO) {
-        TypeReport typeReport = typeReportMapper.fromTypeReportDTO(typeReportDTO);
-        typeReport = typeReportService.createTypeReport(typeReport);
-        return new ResponseEntity<>(typeReportMapper.toTypeReportDTO(typeReport), HttpStatus.OK);
+        TypeReport typeReport = typeReportMapper.fromDTO(typeReportDTO);
+        typeReportService.createTypeReport(typeReport);
+        return new ResponseEntity<>(typeReportMapper.toDTO(typeReport), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TypeReportDTO> getTypeReport(@PathVariable Long id) throws EntityNotFoundException {
         TypeReport typeReport = typeReportService.findById(id);
-        return new ResponseEntity<>(typeReportMapper.toTypeReportDTO(typeReport), HttpStatus.OK);
+        return new ResponseEntity<>(typeReportMapper.toDTO(typeReport), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<TypeReportDTO>> findAllTypeReport() {
         List<TypeReport> typesReports = typeReportService.getAll();
-        return new ResponseEntity<>(typeReportMapper.toTypeReportDTOList(typesReports), HttpStatus.OK);
+        return new ResponseEntity<>(typeReportMapper.toDTOList(typesReports), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TypeReportDTO> saveTypeReport(@PathVariable Long id, @RequestBody TypeReportDTO typeReportDTO) throws EntityNotFoundException {
-        TypeReport typeReport = typeReportMapper.fromTypeReportDTO(typeReportDTO);
+        TypeReport typeReport = typeReportMapper.fromDTO(typeReportDTO);
         typeReport = typeReportService.saveTypeReport(id, typeReport);
-        return new ResponseEntity<>(typeReportMapper.toTypeReportDTO(typeReport), HttpStatus.OK);
+        return new ResponseEntity<>(typeReportMapper.toDTO(typeReport), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

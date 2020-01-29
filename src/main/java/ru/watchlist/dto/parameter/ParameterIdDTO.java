@@ -1,11 +1,10 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.parameter;
 
 import lombok.Data;
 
 @Data
 public class ParameterIdDTO extends ParameterAbstract {
 
-    private long groupId;
-    private String groupTitle;
+    private Long groupId;
 
 }

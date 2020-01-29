@@ -7,6 +7,8 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static ru.watchlist.config.Constants.ID_GENERATOR;
+
 @Data
 @Table(name = "usr")
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class User {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = ID_GENERATOR)
 	private Long id;
 
 	@Column(unique = true)
