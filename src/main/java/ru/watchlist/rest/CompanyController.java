@@ -43,8 +43,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CompanyDTO> saveCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO) throws EntityNotFoundException {
-        Company company = companyMapper.fromDTO(companyDTO);
-        company = companyService.saveCompany(id, company);
+        Company company = companyService.saveCompany(id, companyDTO);
         return new ResponseEntity<>(companyMapper.toDTO(company), HttpStatus.OK);
     }
 

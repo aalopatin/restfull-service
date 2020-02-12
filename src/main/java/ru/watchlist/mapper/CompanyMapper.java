@@ -15,8 +15,7 @@ public interface CompanyMapper {
     Company fromDTO(CompanyDTO companyDTO);
 
     //Company
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    void fill(Company source, @MappingTarget Company target);
+    void fill(CompanyDTO source, @MappingTarget Company target);
 
 }

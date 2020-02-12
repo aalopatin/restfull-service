@@ -1,7 +1,7 @@
 package ru.watchlist.dto.typereport;
 
 import lombok.Data;
-import ru.watchlist.domain.Standard;
+import ru.watchlist.domain.enums.Standard;
 
 @Data
 public class TypeReportAbstract {

@@ -1,14 +1,12 @@
-package ru.watchlist.domain;
+package ru.watchlist.domain.enums;
 
 public enum TypePeriod {
     DATE(""),
     MONTH(""),
-    TREEMONTHS("3M"),
-    SIXMONTHS("6M"),
-    NINEMONTHS("9M"),
-    TWELVEMONTHS("12M"),
     QUARTER("Q"),
-    HALFYEAR("2H");
+    HALFYEAR("H"),
+    NINEMONTHS("9M"),
+    TWELVEMONTHS("Y");
 
     private String symbol;
 

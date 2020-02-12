@@ -48,8 +48,7 @@ public class GroupParametersController {
 
     @PutMapping("/{id}")
     public ResponseEntity<GroupParameterIdDTO> saveGroupParameters(@PathVariable Long id, @RequestBody GroupParameterIdDTO groupParameterIdDTO) throws EntityNotFoundException {
-        GroupParameter groupParameter = groupParameterMapper.fromIdDTO(groupParameterIdDTO);
-        groupParameter = groupParameterService.saveGroupParameter(id, groupParameter);
+        GroupParameter groupParameter = groupParameterService.save(id, groupParameterIdDTO);
         return new ResponseEntity<>(groupParameterMapper.toIdDTO(groupParameter), HttpStatus.OK);
     }
     
@@ -60,6 +59,7 @@ public class GroupParametersController {
     }
 
     private GroupParameterAbstract variantDTO(Variant variant, GroupParameter entity) {
+        if (variant == null) variant = Variant.DEFAULT;
         switch (variant) {
             case ID:
                 return groupParameterMapper.toIdDTO(entity);
@@ -69,6 +69,7 @@ public class GroupParametersController {
     }
 
     private List<? extends GroupParameterAbstract> variantDTOList(Variant variant, List<GroupParameter> entityList) {
+        if (variant == null) variant = Variant.DEFAULT;
         switch (variant) {
             case ID:
                 return groupParameterMapper.toIdDTOList(entityList);

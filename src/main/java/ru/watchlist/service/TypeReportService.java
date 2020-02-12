@@ -4,6 +4,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.TypeReport;
+import ru.watchlist.dto.typereport.TypeReportDTO;
 import ru.watchlist.mapper.TypeReportMapper;
 import ru.watchlist.repository.TypeReportRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -27,9 +28,8 @@ public class TypeReportService {
     @Named("findTypeReportById")
     public TypeReport findById(Long id) throws EntityNotFoundException {
         if(id != null) {
-            TypeReport typeReport = typeReportRepository.findById(id)
+            return typeReportRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(TypeReport.class, "id", id.toString()));
-            return typeReport;
         } else {
             return null;
         }
@@ -39,9 +39,9 @@ public class TypeReportService {
         return typeReportRepository.findAll();
     }
 
-    public TypeReport saveTypeReport(Long id, TypeReport typeReport) throws EntityNotFoundException {
+    public TypeReport save(Long id, TypeReportDTO typeReportDTO) throws EntityNotFoundException {
         TypeReport typeReportFromDB = findById(id);
-        typeReportMapper.fill(typeReport, typeReportFromDB);
+        typeReportMapper.fill(typeReportDTO, typeReportFromDB);
         return typeReportRepository.save(typeReportFromDB);
     }
 

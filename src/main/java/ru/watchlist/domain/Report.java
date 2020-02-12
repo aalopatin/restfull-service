@@ -4,25 +4,44 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Currency;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 
 @Data
 @Entity
+@Table(uniqueConstraints =
+        @UniqueConstraint(
+                name = "UNQ_REPORT",
+                columnNames = { "COMPANY_ID", "PERIOD_ID", "TYPE_REPORT_ID", "CURRENCY" }
+        ))
 public class Report {
 
     @Id
     @GeneratedValue(generator = ID_GENERATOR)
     private Long id;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COMPANY_ID", nullable = false)
     private Company company;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERIOD_ID", nullable = false)
     private Period period;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TYPE_REPORT_ID", nullable = false)
     private TypeReport typeReport;
+
+    @JoinColumn(name = "MULTIPLICITY", nullable = false)
     private int multiplicity;
-    private String currencyCode;
-    @OneToMany
-    List<ParameterValue> parameters;
+
+    @JoinColumn(name = "CURRENCY", nullable = false)
+    private String currency;
+
+    @ElementCollection
+    @CollectionTable(name = "ROW_REPORT")
+    Set<RowReport> rows = new HashSet<>();
 }

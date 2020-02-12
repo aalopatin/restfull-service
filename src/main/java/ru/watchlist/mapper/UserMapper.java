@@ -3,7 +3,7 @@ package ru.watchlist.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 import ru.watchlist.domain.User;
 import ru.watchlist.dto.UserAuthDTO;
 import ru.watchlist.dto.UserAdminDTO;

@@ -1,4 +1,4 @@
-package ru.watchlist.domain;
+package ru.watchlist.domain.enums;
 
 import javax.persistence.Id;
 

@@ -4,6 +4,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.Company;
+import ru.watchlist.dto.company.CompanyDTO;
 import ru.watchlist.mapper.CompanyMapper;
 import ru.watchlist.repository.CompanyRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -42,9 +43,9 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Company saveCompany(Long id, Company company) throws EntityNotFoundException {
+    public Company saveCompany(Long id, CompanyDTO companyDTO) throws EntityNotFoundException {
         Company companyFromDB = findById(id);
-        companyMapper.fill(company, companyFromDB);
+        companyMapper.fill(companyDTO, companyFromDB);
         return companyRepository.save(companyFromDB);
     }
 

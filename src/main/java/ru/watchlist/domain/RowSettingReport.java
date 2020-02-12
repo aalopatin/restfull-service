@@ -1,11 +1,9 @@
 package ru.watchlist.domain;
 
 import lombok.Data;
+import ru.watchlist.domain.enums.TypeRowReport;
 
 import javax.persistence.*;
-import java.util.List;
-
-import static ru.watchlist.config.Constants.ID_GENERATOR;
 
 @Data
 @Embeddable

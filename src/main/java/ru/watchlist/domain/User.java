@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.watchlist.domain.enums.Role;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 

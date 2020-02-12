@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 import ru.watchlist.domain.User;
 import ru.watchlist.repository.UserRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;

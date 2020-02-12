@@ -42,9 +42,8 @@ public class TypeReportController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TypeReportDTO> saveTypeReport(@PathVariable Long id, @RequestBody TypeReportDTO typeReportDTO) throws EntityNotFoundException {
-        TypeReport typeReport = typeReportMapper.fromDTO(typeReportDTO);
-        typeReport = typeReportService.saveTypeReport(id, typeReport);
+    public ResponseEntity<TypeReportDTO> save(@PathVariable Long id, @RequestBody TypeReportDTO typeReportDTO) throws EntityNotFoundException {
+        TypeReport typeReport = typeReportService.save(id, typeReportDTO);
         return new ResponseEntity<>(typeReportMapper.toDTO(typeReport), HttpStatus.OK);
     }
 

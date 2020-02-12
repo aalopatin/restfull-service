@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.Period;
-import ru.watchlist.dto.PeriodDTO;
+import ru.watchlist.dto.report.PeriodDTO;
 import ru.watchlist.mapper.PeriodMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.PeriodService;
@@ -13,7 +13,7 @@ import ru.watchlist.service.PeriodService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/periods")
+@RequestMapping("/api/periods")
 public class PeriodController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class PeriodController {
     @PostMapping
     public ResponseEntity<PeriodDTO> createPeriod(@RequestBody PeriodDTO periodDTO) {
         Period period = periodMapper.fromPeriodDTO(periodDTO);
-        period = periodService.createPeriod(period);
+        periodService.createPeriod(period);
         return new ResponseEntity<>(periodMapper.toPeriodDTO(period), HttpStatus.OK);
     }
 
@@ -36,7 +36,7 @@ public class PeriodController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PeriodDTO>> getAllPeriod() {
+    public ResponseEntity<List<PeriodDTO>> findAll() {
         List<Period> periods = periodService.getAll();
         return new ResponseEntity<>(periodMapper.toPeriodDTOList(periods), HttpStatus.OK);
     }

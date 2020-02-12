@@ -1,7 +1,7 @@
 package ru.watchlist.dto;
 
 import lombok.Data;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 
 import java.util.Set;
 

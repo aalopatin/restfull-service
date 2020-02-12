@@ -4,6 +4,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.GroupParameter;
+import ru.watchlist.dto.groupparameter.GroupParameterIdDTO;
 import ru.watchlist.mapper.GroupParameterMapper;
 import ru.watchlist.repository.GroupParameterRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -23,9 +24,8 @@ public class GroupParameterService {
     @Named("findGroupById")
     public GroupParameter findById(Long id) throws EntityNotFoundException {
         if (id != null) {
-            GroupParameter groupParameters = groupParameterRepository.findById(id)
+            return groupParameterRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(GroupParameter.class, "id", id.toString()));
-            return groupParameters;
         } else {
             return null;
         }
@@ -43,10 +43,10 @@ public class GroupParameterService {
         return groupParameterRepository.save(groupParameters);
     }
 
-    public GroupParameter saveGroupParameter(Long id, GroupParameter groupParameters) throws EntityNotFoundException {
-        GroupParameter groupParametersFromDB = findById(id);
-        groupParameterMapper.fill(groupParameters, groupParametersFromDB);
-        return groupParameterRepository.save(groupParametersFromDB);
+    public GroupParameter save(Long id, GroupParameterIdDTO groupParameterIdDTO) throws EntityNotFoundException {
+        GroupParameter groupParameterFromDB = findById(id);
+        groupParameterMapper.fill(groupParameterIdDTO, groupParameterFromDB);
+        return groupParameterRepository.save(groupParameterFromDB);
     }
 
     public void deleteGroupParameter(Long id) throws EntityNotFoundException {

@@ -27,52 +27,64 @@ public class SettingReportController {
     @PostMapping
     public ResponseEntity<SettingReportIdDTO> create(@RequestBody SettingReportIdDTO settingReportIdDTO) throws EntityNotFoundException {
         SettingReport settingReport = settingReportMapper.fromIdDTO(settingReportIdDTO);
-        settingReport = settingReportService.create(settingReport);
+        settingReportService.create(settingReport);
         return new ResponseEntity<>(settingReportMapper.toIdDTO(settingReport), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<? extends SettingReportAbstract>> findAll(@RequestParam(value = "variant", required = false) Variant variant,
-                                                                                      @RequestParam(value = "search", required = false) String search) {
+                                                                         @RequestParam(value = "rows", required = false) boolean rows,
+                                                                         @RequestParam(value = "search", required = false) String search) {
 
         List<SettingReport> settingsReports = settingReportService.findAll(search);
-        return new ResponseEntity<>(variantDTOList(variant, settingsReports), HttpStatus.OK);
+        return new ResponseEntity<>(variantDTOList(variant, rows, settingsReports), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<? extends SettingReportAbstract> get(@PathVariable Long id,
-                                                                      @RequestParam(value = "variant", required = false) Variant variant) throws EntityNotFoundException {
+                                                               @RequestParam(value = "variant", required = false) Variant variant,
+                                                               @RequestParam(value = "rows", required = false) boolean rows) throws EntityNotFoundException {
 
         SettingReport settingReport = settingReportService.findById(id);
-        return new ResponseEntity<>(variantDTO(variant, settingReport), HttpStatus.OK);
+        return new ResponseEntity<>(variantDTO(variant, rows, settingReport), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SettingReportIdDTO> save(@PathVariable Long id, @RequestBody SettingReportIdDTO settingReportDTO) throws EntityNotFoundException {
-        SettingReport settingReport = settingReportMapper.fromIdDTO(settingReportDTO);
-        settingReport = settingReportService.save(id, settingReport);
+        SettingReport settingReport = settingReportService.save(id, settingReportDTO);
         return new ResponseEntity<>(settingReportMapper.toIdDTO(settingReport), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteGroupParameters(@PathVariable Long id) throws EntityNotFoundException {
+    public ResponseEntity<Object> delete(@PathVariable Long id) throws EntityNotFoundException {
         settingReportService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private SettingReportAbstract variantDTO(Variant variant, SettingReport settingReport) {
+    private SettingReportAbstract variantDTO(Variant variant, boolean rows, SettingReport settingReport) {
+        if (variant == null) variant = Variant.DEFAULT;
         switch (variant) {
             case ID:
-                return settingReportMapper.toIdDTO(settingReport);
+                if (rows) {
+                    return settingReportMapper.toIdDTO(settingReport);
+                } else {
+                    return settingReportMapper.toIdNoRowsDTO(settingReport);
+                }
             default:
                 return settingReportMapper.toDTO(settingReport);
         }
     }
 
-    private List<? extends SettingReportAbstract> variantDTOList(Variant variant, List<SettingReport> settingsReports) {
+    private List<? extends SettingReportAbstract> variantDTOList(Variant variant, boolean rows, List<SettingReport> settingsReports) {
+        if (variant == null) variant = Variant.DEFAULT;
         switch (variant) {
             case ID:
-                return settingReportMapper.toIdDTOList(settingsReports);
+                if (rows) {
+                    return settingReportMapper.toIdDTOList(settingsReports);
+                } else {
+                    return settingReportMapper.toIdNoRowsDTOList(settingsReports);
+                }
+
             default:
                 return settingReportMapper.toDTOList(settingsReports);
         }

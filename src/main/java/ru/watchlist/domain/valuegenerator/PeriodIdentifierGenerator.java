@@ -1,10 +1,10 @@
-package ru.watchlist.idgenerator;
+package ru.watchlist.domain.valuegenerator;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import ru.watchlist.domain.Period;
-import ru.watchlist.domain.TypePeriod;
+import ru.watchlist.domain.enums.TypePeriod;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,7 +19,9 @@ public class PeriodIdentifierGenerator implements IdentifierGenerator {
         Period period = (Period) object;
         TypePeriod typePeriod = period.getType();
         LocalDate endPeriod = period.getEndPeriod();
+        int month = endPeriod.getMonthValue() - 1;
         String id = "";
+        String symbol = "";
 
         switch (typePeriod) {
             case DATE:
@@ -28,16 +30,21 @@ public class PeriodIdentifierGenerator implements IdentifierGenerator {
             case MONTH:
                 id = endPeriod.format(DateTimeFormatter.ofPattern("MMMyyyy", Locale.ENGLISH)).toUpperCase();
                 break;
-            case TREEMONTHS:
-            case SIXMONTHS:
-            case NINEMONTHS:
-            case TWELVEMONTHS:
-            case HALFYEAR:
-                id = period.getType().getSymbol() + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
-                break;
             case QUARTER:
-                int month = endPeriod.getMonthValue();
-                id = (month/3 + 1) + typePeriod.getSymbol() + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
+                int quarter = (month/3 + 1);
+                symbol = quarter == 1 ? "3M" : quarter + "Q";
+                id =  symbol + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
+                break;
+            case HALFYEAR:
+                int half = (month/6 + 1);
+                symbol = half == 1 ? "6M" : "2H";
+                id = symbol + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
+                break;
+            case NINEMONTHS:
+                id = "9M" + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
+                break;
+            case TWELVEMONTHS:
+                id = "12M" + endPeriod.format(DateTimeFormatter.ofPattern("yyyy"));
                 break;
         }
 

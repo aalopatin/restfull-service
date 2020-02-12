@@ -28,7 +28,6 @@ public interface ParameterMapper {
     //Parameter
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "cumulative", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void fill(Parameter source, @MappingTarget Parameter target);
+    void fill(ParameterIdDTO source, @MappingTarget Parameter target);
     
 }

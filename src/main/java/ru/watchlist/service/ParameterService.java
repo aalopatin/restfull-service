@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.Parameter;
+import ru.watchlist.dto.parameter.ParameterIdDTO;
 import ru.watchlist.mapper.ParameterMapper;
 import ru.watchlist.repository.GroupParameterRepository;
 import ru.watchlist.repository.ParameterRepository;
@@ -29,9 +30,8 @@ public class ParameterService {
     @Named("findParameterById")
     public Parameter findById(Long id) throws EntityNotFoundException {
         if(id != null) {
-            Parameter parameter = parameterRepository.findById(id)
+            return parameterRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(Parameter.class, "id", id.toString()));
-            return parameter;
         } else {
             return null;
         }
@@ -49,19 +49,18 @@ public class ParameterService {
 
     }
 
-    public Parameter createParameter(Parameter parameter) {
-        Parameter createdParameter = parameterRepository.save(parameter);
-        return createdParameter;
+    public Parameter create(Parameter parameter) {
+        return parameterRepository.save(parameter);
     }
 
-    public Parameter saveParameter(Long id, Parameter parameter) throws EntityNotFoundException {
+    public Parameter save(Long id, ParameterIdDTO parameterIdDTO) throws EntityNotFoundException {
         Parameter parameterFromDB = findById(id);
-        parameterMapper.fill(parameter, parameterFromDB);
+        parameterMapper.fill(parameterIdDTO, parameterFromDB);
         parameterRepository.save(parameterFromDB);
         return parameterFromDB;
     }
 
-    public void deleteParameter(Long id) throws EntityNotFoundException {
+    public void delete(Long id) throws EntityNotFoundException {
         try {
             parameterRepository.deleteById(id);
         } catch (IllegalArgumentException ex) {

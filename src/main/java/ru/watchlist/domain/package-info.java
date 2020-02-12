@@ -5,7 +5,7 @@
 
 @org.hibernate.annotations.GenericGenerator(
         name = "ID_PERIOD_GENERATOR",
-        strategy = "ru.watchlist.idgenerator.PeriodIdentifierGenerator"
+        strategy = "ru.watchlist.domain.valuegenerator.PeriodIdentifierGenerator"
 )
 
 package ru.watchlist.domain;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.SettingReport;
+import ru.watchlist.dto.settingreport.SettingReportIdDTO;
 import ru.watchlist.mapper.SettingReportMapper;
 import ru.watchlist.repository.SettingReportRepository;
 import ru.watchlist.rest.exception.EntityNotFoundException;
@@ -47,9 +48,9 @@ public class SettingReportService {
         return settingReport;
     }
 
-    public SettingReport save(Long id, SettingReport settingReport) throws EntityNotFoundException {
+    public SettingReport save(Long id, SettingReportIdDTO settingReportDTO) throws EntityNotFoundException {
         SettingReport settingReportFromDB = findById(id);
-        settingReportMapper.fill(settingReport, settingReportFromDB);
+        settingReportMapper.fill(settingReportDTO, settingReportFromDB);
         settingReportRepository.save(settingReportFromDB);
         return settingReportFromDB;
     }

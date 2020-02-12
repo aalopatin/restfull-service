@@ -21,20 +21,29 @@ public class PeriodService {
     //Repository
 
     public Period createPeriod(Period period) {
-        Period createdPeriod = periodRepository.save(period);
-        return createdPeriod;
+
+        Integer number;
+
+        switch (period.getType()) {
+            case QUARTER:
+                number = (period.getEndPeriod().getMonthValue() - 1)/3 + 1;
+                period.setNumber(number.byteValue());
+                break;
+            case HALFYEAR:
+                number = (period.getEndPeriod().getMonthValue() - 1)/6 + 1;
+                period.setNumber(number.byteValue());
+                break;
+        }
+
+        return periodRepository.save(period);
     }
 
     public Period findById(String id) throws EntityNotFoundException {
-
-        Period period = periodRepository.findById(id).orElse(null);
-
-        if (period == null) {
-            throw new EntityNotFoundException(Period.class, "id", id);
+        if(id != null) {
+            return periodRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Period.class, "id", id));
+        } else {
+            return null;
         }
-
-        return period;
-
     }
 
     public List<Period> getAll() {

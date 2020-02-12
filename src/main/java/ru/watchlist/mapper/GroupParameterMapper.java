@@ -33,7 +33,6 @@ public interface GroupParameterMapper {
     //GroupParameter
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "common", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
-    void fill(GroupParameter source, @MappingTarget GroupParameter target);
+    void fill(GroupParameterIdDTO source, @MappingTarget GroupParameter target);
 
 }

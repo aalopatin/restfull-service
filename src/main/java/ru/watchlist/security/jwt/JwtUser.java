@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 
 import java.util.Collection;
 import java.util.Set;

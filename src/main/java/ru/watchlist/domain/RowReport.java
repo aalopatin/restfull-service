@@ -7,14 +7,12 @@ import javax.persistence.*;
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 
 @Data
-@Entity
-public class ParameterValue {
+@Embeddable
+public class RowReport {
 
-    @Id
-    @GeneratedValue(generator = ID_GENERATOR)
-    private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARAMETER_ID", nullable = false)
     private Parameter parameter;
-    private float value;
+    private Float value;
 
 }

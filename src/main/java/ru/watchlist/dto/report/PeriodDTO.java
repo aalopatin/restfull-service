@@ -1,7 +1,7 @@
-package ru.watchlist.dto;
+package ru.watchlist.dto.report;
 
 import lombok.Data;
-import ru.watchlist.domain.TypePeriod;
+import ru.watchlist.domain.enums.TypePeriod;
 
 import java.time.LocalDate;
 
@@ -9,13 +9,9 @@ import java.time.LocalDate;
 public class PeriodDTO {
 
     private String id;
-
-//    @JsonFormat(pattern="dd.MM.yyyy")
     private LocalDate startPeriod;
-
-//    @JsonFormat(pattern="dd.MM.yyyy")
     private LocalDate endPeriod;
-
     private TypePeriod type;
+    private Byte number;
 
 }

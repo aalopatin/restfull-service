@@ -26,7 +26,7 @@ public class SettingReport {
     private Company company;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TYPEREPORT_ID", nullable = false)
+    @JoinColumn(name = "TYPE_REPORT_ID", nullable = false)
     private TypeReport typeReport;
 
     @ManyToOne(fetch = FetchType.LAZY)

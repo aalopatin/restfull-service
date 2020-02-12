@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 import ru.watchlist.security.JwtUserDetailsService;
 
 import javax.annotation.PostConstruct;

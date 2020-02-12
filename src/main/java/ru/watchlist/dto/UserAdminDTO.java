@@ -2,7 +2,7 @@ package ru.watchlist.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-import ru.watchlist.domain.Role;
+import ru.watchlist.domain.enums.Role;
 
 import java.util.Set;
 

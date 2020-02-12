@@ -17,7 +17,6 @@ public interface TypeReportMapper {
 
     //TypeReport
     @Mapping(target = "id", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void fill(TypeReport source, @MappingTarget TypeReport target);
+    void fill(TypeReportDTO source, @MappingTarget TypeReport target);
 
 }
