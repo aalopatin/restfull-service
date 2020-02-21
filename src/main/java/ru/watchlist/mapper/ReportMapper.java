@@ -20,23 +20,31 @@ public interface ReportMapper {
 
     //ReportIdDTO -----------------------------------------------------
     @Mapping(target = "companyId", source = "company.id")
+    @Mapping(target = "companyTitle", source = "company.title")
     @Mapping(target="periodId", source = "period.id")
     @Mapping(target="typeReportId", source = "typeReport.id")
+    @Mapping(target="typeReportTitle", source = "typeReport.title")
     ReportIdDTO toIdDTO(Report report);
     List<ReportIdDTO> toIdDTOList(List<Report> reportList);
 
-//    @Mapping(target = "id", ignore = true)
     @Mapping(target="company", source = "companyId", qualifiedByName = { "findCompanyById" })
     @Mapping(target="period", source = "periodId")
     @Mapping(target="typeReport", source = "typeReportId", qualifiedByName = { "findTypeReportById" })
+    @Mapping(target = "createdOn", ignore = true)
+    @Mapping(target = "modifiedOn", ignore = true)
     Report fromIdDTO(ReportIdDTO reportIdDTO) throws EntityNotFoundException;
     List<Report> fromIdDTOList(List<ReportIdDTO> reportIdDTOList) throws EntityNotFoundException;
 
     //SettingReportIdNORowsDTO
     @Mapping(target = "companyId", source = "company.id")
+    @Mapping(target = "companyTitle", source = "company.title")
     @Mapping(target = "periodId", source = "period.id")
     @Mapping(target = "typeReportId", source = "typeReport.id")
-    ReportIdNoRowsDTO toIdNoRowsDTO(Report report);
+    @Mapping(target = "typeReportTitle", source = "typeReport.title")
+    ReportIdNoRowsDTO toIdNoRowsDTO(Report report) throws EntityNotFoundException;
     List<ReportIdNoRowsDTO> toIdNoRowsDTOList(List<Report> reportList);
+
+
+
 
 }

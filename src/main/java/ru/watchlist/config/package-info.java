@@ -8,4 +8,4 @@
         strategy = "ru.watchlist.domain.valuegenerator.PeriodIdentifierGenerator"
 )
 
-package ru.watchlist.domain;
+package ru.watchlist.config;

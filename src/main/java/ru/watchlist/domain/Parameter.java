@@ -2,7 +2,10 @@ package ru.watchlist.domain;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 

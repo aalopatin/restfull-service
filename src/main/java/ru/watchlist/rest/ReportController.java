@@ -1,11 +1,14 @@
 package ru.watchlist.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.watchlist.domain.Report;
 import ru.watchlist.dto.ArrayDTO;
+import ru.watchlist.dto.PageReportDTO;
 import ru.watchlist.dto.Variant;
 import ru.watchlist.dto.report.ReportAbstract;
 import ru.watchlist.dto.report.ReportIdDTO;
@@ -13,8 +16,6 @@ import ru.watchlist.mapper.ReportMapper;
 import ru.watchlist.rest.exception.EntityNotFoundException;
 import ru.watchlist.service.ReportService;
 
-import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,25 @@ public class ReportController {
         return new ResponseEntity<>(variantDTOList(reportList, variant, rows), HttpStatus.OK);
     }
 
+    @GetMapping(params = {"page", "size", "sortBy"})
+    public ResponseEntity<PageReportDTO> findAll(@RequestParam(value = "variant", required = false) Variant variant,
+                                                 @RequestParam(value = "rows", required = false) boolean rows,
+                                                 @RequestParam(value = "search", required = false) String search,
+                                                 @RequestParam(value = "page") Integer page,
+                                                 @RequestParam(value = "size") Integer size,
+                                                 @RequestParam(value = "sortBy") String sortBy,
+                                                 @RequestParam(value = "direction", required = false) Sort.Direction direction) {
+
+        Page<Report> pageReport = reportService.findAll(search, page, size, sortBy, direction);
+
+        PageReportDTO pageReportDTO = new PageReportDTO();
+        pageReportDTO.setReports(variantDTOList(pageReport.getContent(), variant, rows));
+        pageReportDTO.setTotal(pageReport.getTotalElements());
+        pageReportDTO.setPages(pageReport.getTotalPages());
+
+        return new ResponseEntity<>(pageReportDTO, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<? extends ReportAbstract> get(@PathVariable Long id,
                                                                @RequestParam(value = "variant", required = false) Variant variant,
@@ -59,7 +79,7 @@ public class ReportController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private ReportAbstract variantDTO(Variant variant, boolean rows, Report report) {
+    private ReportAbstract variantDTO(Variant variant, boolean rows, Report report) throws EntityNotFoundException {
         if (variant == null) variant = Variant.DEFAULT;
         switch (variant) {
             case ID:
@@ -83,7 +103,7 @@ public class ReportController {
                     return reportMapper.toIdNoRowsDTOList(reportList);
                 }
             default:
-                return reportMapper.toIdDTOList(reportList);
+                return reportMapper.toIdNoRowsDTOList(reportList);
         }
     }
 

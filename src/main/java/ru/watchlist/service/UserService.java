@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+//import org.thymeleaf.TemplateEngine;
+//import org.thymeleaf.context.Context;
 import ru.watchlist.domain.enums.Role;
 import ru.watchlist.domain.User;
 import ru.watchlist.repository.UserRepository;
@@ -30,8 +30,8 @@ public class UserService{
     @Autowired
     private MailSender mailSender;
 
-    @Autowired
-    private TemplateEngine templateEngine;
+//    @Autowired
+//    private TemplateEngine templateEngine;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -147,15 +147,15 @@ public class UserService{
     private void sendActivationCode(User user){
 
         if (!StringUtils.isEmpty(user.getEmail())) {
-
-            Context ctx = new Context();
-
-            ctx.setVariable("name", user.getUsername());
-            ctx.setVariable("activationCode", user.getActivationCode());
-
-            String htmlMessage = templateEngine.process("email/activationCode", ctx);
-
-            mailSender.send(user.getEmail(), "The Watch List: активация электронной почты", htmlMessage);
+//
+//            Context ctx = new Context();
+//
+//            ctx.setVariable("name", user.getUsername());
+//            ctx.setVariable("activationCode", user.getActivationCode());
+//
+//            String htmlMessage = templateEngine.process("email/activationCode", ctx);
+//
+//            mailSender.send(user.getEmail(), "The Watch List: активация электронной почты", htmlMessage);
 
         }
 

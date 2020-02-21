@@ -2,9 +2,10 @@ package ru.watchlist.domain;
 
 import lombok.Data;
 
-import javax.persistence.*;
-
-import static ru.watchlist.config.Constants.ID_GENERATOR;
+import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Data
 @Embeddable

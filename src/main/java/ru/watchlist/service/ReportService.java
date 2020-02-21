@@ -1,6 +1,9 @@
 package ru.watchlist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.watchlist.domain.Report;
@@ -25,10 +28,22 @@ public class ReportService {
     }
 
     public List<Report> findAll(String search) {
-
         SpecificationBuilder<Report> builder = new SpecificationBuilder<>(search);
         Specification<Report> specification = builder.build();
         return reportRepository.findAll(specification);
+    }
+
+    public Page<Report> findAll(String search, Integer page, Integer size, String sortBy, Sort.Direction direction) {
+
+        SpecificationBuilder<Report> builder = new SpecificationBuilder<>(search);
+        Specification<Report> specification = builder.build();
+
+        Sort sort = new Sort(direction, sortBy);
+
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        Page<Report> reportPage = reportRepository.findAll(specification, pageRequest);
+        return reportPage;
 
     }
 

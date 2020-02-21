@@ -1,10 +1,8 @@
 package ru.watchlist.domain;
 
 import lombok.Data;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 

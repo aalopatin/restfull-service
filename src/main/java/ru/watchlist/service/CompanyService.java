@@ -3,6 +3,7 @@ package ru.watchlist.service;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.watchlist.config.property.FileStorageProperties;
 import ru.watchlist.domain.Company;
 import ru.watchlist.dto.company.CompanyDTO;
 import ru.watchlist.mapper.CompanyMapper;
@@ -56,6 +57,21 @@ public class CompanyService {
             throw new EntityNotFoundException(Company.class, "id", id.toString());
         }
 
+    }
+
+    public String saveLogoFileName(Company company, String logoFileName) {
+
+        company.setLogo(logoFileName);
+        companyRepository.save(company);
+        return logoFileName;
+    }
+
+    public String getLogoFileName(Long id) throws EntityNotFoundException {
+        Company company = findById(id);
+        if (company != null) {
+            return company.getLogo();
+        }
+        return "";
     }
 
 }

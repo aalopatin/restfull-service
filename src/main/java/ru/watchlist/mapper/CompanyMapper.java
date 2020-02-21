@@ -3,10 +3,12 @@ package ru.watchlist.mapper;
 import org.mapstruct.*;
 import ru.watchlist.domain.Company;
 import ru.watchlist.dto.company.CompanyDTO;
+import ru.watchlist.service.FileStorageService;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CompanyMapperProcessor.class})
+//@DecoratedWith(CompanyMapperDecorator.class)
 public interface CompanyMapper {
 
     //CompanyDTO

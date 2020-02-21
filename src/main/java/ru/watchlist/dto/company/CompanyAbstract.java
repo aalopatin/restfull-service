@@ -8,5 +8,6 @@ public abstract class CompanyAbstract {
     private Long id;
     private String title;
     private String fullTitle;
+    private String logoURI;
 
 }

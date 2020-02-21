@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 
-@Entity
 @Data
+@Entity
 public class GroupParameter {
 
     @Id

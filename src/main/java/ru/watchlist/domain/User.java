@@ -1,19 +1,18 @@
 package ru.watchlist.domain;
 
-import java.util.Set;
-
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.watchlist.domain.enums.Role;
 
+import javax.persistence.*;
+import java.util.Set;
+
 import static ru.watchlist.config.Constants.ID_GENERATOR;
 
 @Data
-@Table(name = "usr")
 @NoArgsConstructor
 @Entity
+@Table(name = "usr")
 public class User {
 	
 	private static final long serialVersionUID = 1L;

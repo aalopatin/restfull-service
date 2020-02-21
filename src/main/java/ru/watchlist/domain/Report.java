@@ -3,9 +3,7 @@ package ru.watchlist.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Currency;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static ru.watchlist.config.Constants.ID_GENERATOR;
@@ -17,7 +15,7 @@ import static ru.watchlist.config.Constants.ID_GENERATOR;
                 name = "UNQ_REPORT",
                 columnNames = { "COMPANY_ID", "PERIOD_ID", "TYPE_REPORT_ID", "CURRENCY" }
         ))
-public class Report {
+public class Report extends EntityDate {
 
     @Id
     @GeneratedValue(generator = ID_GENERATOR)

@@ -22,19 +22,6 @@ public class PeriodService {
 
     public Period createPeriod(Period period) {
 
-        Integer number;
-
-        switch (period.getType()) {
-            case QUARTER:
-                number = (period.getEndPeriod().getMonthValue() - 1)/3 + 1;
-                period.setNumber(number.byteValue());
-                break;
-            case HALFYEAR:
-                number = (period.getEndPeriod().getMonthValue() - 1)/6 + 1;
-                period.setNumber(number.byteValue());
-                break;
-        }
-
         return periodRepository.save(period);
     }
 

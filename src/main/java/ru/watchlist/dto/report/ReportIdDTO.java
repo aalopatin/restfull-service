@@ -1,7 +1,6 @@
 package ru.watchlist.dto.report;
 
 import lombok.Data;
-import ru.watchlist.domain.RowReport;
 
 import java.util.Set;
 
@@ -9,8 +8,13 @@ import java.util.Set;
 public class ReportIdDTO extends ReportAbstract {
 
     private Long companyId;
+    private String companyTitle;
+
     private String periodId;
+
     private Long typeReportId;
+    private String typeReportTitle;
+
     Set<RowReportIdDTO> rows;
 
 }
