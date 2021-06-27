@@ -19,7 +19,7 @@ spring:
   mail:
     host: smtp.yandex.ru
     username: Andersen1313@yandex.ru
-    password: 1qaz!QAZ
+    password: 1qaz!QAZXC
     port: 465
     protocol: smtps
   session:
