@@ -12,6 +12,7 @@ public interface RowReportMapper {
 
     //RowSettingReportIdDTO
     @Mapping(target = "parameterId", source = "parameter.id")
+    @Mapping(target = "parameterTitle", source = "parameter.title")
     RowReportIdDTO toIdDTO(RowReport rowSettingReport);
 
     @Mapping(target = "parameter", source = "parameterId", qualifiedByName = { "findParameterById" })

@@ -18,4 +18,10 @@ public class RowSettingReport {
 
     private String title;
 
+    @Column(length = 31)
+    private String fontStyle;
+
+    @Column(length = 11)
+    private String fontSize;
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 public class RowReportIdDTO {
 
     private Long parameterId;
+    private String parameterTitle;
     private float value;
 
 }

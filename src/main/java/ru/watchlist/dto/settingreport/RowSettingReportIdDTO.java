@@ -9,6 +9,7 @@ public class RowSettingReportIdDTO {
     private TypeRowReport typeRow;
     private Long parameterId;
     private String title;
-
+    private String fontStyle;
+    private String fontSize;
 
 }

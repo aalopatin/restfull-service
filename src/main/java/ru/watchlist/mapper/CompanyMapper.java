@@ -8,7 +8,6 @@ import ru.watchlist.service.FileStorageService;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {CompanyMapperProcessor.class})
-//@DecoratedWith(CompanyMapperDecorator.class)
 public interface CompanyMapper {
 
     //CompanyDTO
